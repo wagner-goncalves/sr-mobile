@@ -1,0 +1,64 @@
+<ion-view title="{{vm.index + 1}} de {{vm.quiz.stats.totalPerguntas}}" class="login">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="wizard">
+        <div class="sr-slide text-center container">
+            <div class="progress">
+                <div ng-class="{'progress-bar-success' : vm.progress == 100,
+                                   'progress-bar-danger' : vm.progress < 50, 
+                                   'progress-bar-success' : vm.progress >= 50 }" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{vm.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progress}}%">
+                    <span ng-if="vm.progress > 50" class="str-only barra-progresso">{{vm.index + 1}} de {{vm.quiz.stats.totalPerguntas}}</span>
+                </div>
+                <span ng-if="vm.progress <= 50" class="str-only barra-progresso">{{vm.index + 1}} de {{vm.quiz.stats.totalPerguntas}}</span>
+            </div>       
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="option-wrap">
+                        <div ng-switch="vm.index" ng-repeat="item in vm.quiz.perguntas">
+                            <div ng-if="$index === vm.index" 
+                             class="my-switch-animation {{vm.animation_type}}">
+                                <div class="col-md-12 center">
+                                    <h3 class='title '>{{item.titulo}}</h3>
+                                    <p class="text-primary">{{item.pergunta}}</p>
+                                </div>
+                                <button angular-ripple class="btn btn-sm btn-block"
+                                     ng-class="resposta.selected ? 'option-active btn-primary' : 'btn-default'" 
+                                     ng-repeat="resposta in item.respostas" 
+                                     ng-click='vm.markAnswer(resposta, item)'>
+                                    {{resposta.titulo}} <span class="option-actions"><i class='fa fa-check'></i></span>
+                                </button>
+                                
+                                <div style="padding: 10px">
+                                    <i ng-click="vm.mostraDetalhe()" class='fa fa-info-circle fa-2x'></i>
+                                </div>
+                                
+                                <div ng-if="vm.detalhar" style="padding-bottom: 20px">
+                                    <h3 class='title'>{{item.proposicao.tipo}}-{{item.proposicao.numero}}/{{item.proposicao.ano}}</h3>
+                                    <p class="text-primary" ng-if="item.proposicao.objeto != ''">{{item.proposicao.objeto}}</p>
+                                    <p class="text-primary" ng-if="item.proposicao.resumo != ''">{{item.proposicao.resumo}}</p>
+                                    <p class="text-primary small" ng-if="item.proposicao.ementa != ''">{{item.proposicao.ementa}}</p>
+                                    <p class="text-primary small" ng-if="item.proposicao.url != ''">
+                                        <a ng-click="vm.inteiroTeor(item.proposicao.url)"><i class="fa fa-external-link fa-lg"></i> Ver inteiro teor</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-xs-6 text-left">
+                            <button class='btn btn-secondary' ng-click="vm.back()"> <i class='fa fa-chevron-left'></i> 
+                                <span ng-if="vm.index == 0">Sair</span>
+                                <span ng-if="vm.index !== 0">Anterior</span> </button>
+                        </div>
+
+                        <div class="col-xs-6 text-right">
+                            <button class='btn btn-primary' ng-click="vm.next()"  ng-if="vm.quiz.perguntas[vm.index].respondida"> Próximo <i class='fa fa-chevron-right'></i> </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

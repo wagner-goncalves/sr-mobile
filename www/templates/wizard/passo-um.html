@@ -1,0 +1,33 @@
+<ion-view title="Escolha as Casas" class="login">
+    <ion-nav-buttons ng-if="$state.includes('app.wizard-passo-um')" side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="wizard">
+        <div class="sr-slide text-center container">
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-gear fa-3x"></i></h1>
+                <h1>Vamos configurar o Sr.Cidadão!</h1>
+                <h4>Quais casas deseja monitorar?</h4>
+                <h6>Escolha pelo menos uma casa.</h6>
+                <div class="text-center" style="stroke: #fff">
+                    <ion-spinner  ng-show="!vm.instituicoes" class="spinner my-spinner" style="stroke: #fff"></ion-spinner>
+                </div>
+                <div class="text-left" ng-if="vm.profileLoaded && vm.userPreferencesLoaded && vm.basePreferencesLoaded" class="list list-inset">
+                    <hr>
+                    <ion-checkbox  
+                            ng-repeat="item in vm.instituicoes track by item.oidInstituicao"
+                            ng-init="checkedInstituicao[item.oidInstituicao] = (vm.loggedUser.preferencias.instituicoes.indexOf(item.oidInstituicao) > -1)"
+                            ng-click="vm.savePreference('instituicao', item.oidInstituicao, checkedInstituicao[item.oidInstituicao])"
+                            ng-model="checkedInstituicao[item.oidInstituicao]" 
+                            ng-checked="vm.loggedUser.preferencias.instituicoes.indexOf(item.oidInstituicao) > -1">{{item.nome}}</ion-checkbox>
+                    <hr>
+                <div class="text-center">
+                    <button angular-ripple class="btn btn-lg btn-default" ng-click="vm.passoDois()">Próximo <i class="fa fa-arrow-right"></i></button>
+                </div>                
+            </div>
+
+
+            
+        </div>
+    </ion-content>
+</ion-view>

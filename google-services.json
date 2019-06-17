@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "884092009918",
+    "firebase_url": "https://srcidadao-9808c.firebaseio.com",
+    "project_id": "srcidadao-9808c",
+    "storage_bucket": "srcidadao-9808c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884092009918:android:ff4b25412edae0c2",
+        "android_client_info": {
+          "package_name": "com.ionicframework.srcidadao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884092009918-atgba1s17jvvt1ttd4t8qpn5jomg6nm9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ionicframework.srcidadao",
+            "certificate_hash": "C08472C0E3284A2FB194338C7384D1321FF50081"
+          }
+        },
+        {
+          "client_id": "884092009918-04aj8sg1vs40lsmm6m2qal4jg1v38g5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTntvMeFUUUKu1eMxb8ih9pS4os74J2cA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884092009918-04aj8sg1vs40lsmm6m2qal4jg1v38g5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,37 @@
+<ion-view title="Escolha os Estados" class="login">
+    <ion-nav-buttons ng-if="$state.includes('app.wizard-passo-dois')" side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="wizard">
+        <div class="sr-slide text-center container">
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-globe fa-lg"></i> Estados</h1>
+                <h4>Quais estados deseja monitorar?</h4>
+                <h6>Escolha pelo menos um Estado.</h6>
+                
+                <button angular-ripple class="btn btn-default btn-sm" ng-click="vm.finalizar()">Concluir <i class="fa fa-check"></i></button>
+                <!--<button angular-ripple class="btn btn-sm btn-default" ng-click="vm.passoTres()">Próximo <i class="fa fa-arrow-right"></i></button>-->
+                <div class="text-center" ng-show="!vm.estados" style="padding-top: 10px;">
+                    <ion-spinner style="stroke: #fff;" class="spinner my-spinner"></ion-spinner>
+                </div>                 
+                <div class="text-left item-columns" ng-if="vm.profileLoaded && vm.userPreferencesLoaded && vm.basePreferencesLoaded" class="list list-inset">
+                    <hr>
+                    <ion-checkbox 
+                        ng-repeat="item in vm.estados track by item.uf"
+                        ng-init="vm.checkedEstado[item.uf] = (vm.loggedUser.preferencias.estados.indexOf(item.uf) > -1)"
+                        ng-click="vm.savePreference('estado', item.uf, vm.checkedEstado[item.uf])"
+                        ng-model="vm.checkedEstado[item.uf]" 
+                        ng-checked="vm.loggedUser.preferencias.estados.indexOf(item.uf) > -1">{{item.nome}}</ion-checkbox>
+                    <hr>
+                    <div class="text-center">
+                        <button class="btn btn-link" ng-click="vm.passoUm()">Voltar</button>
+                        <button angular-ripple class="btn btn-default btn-lg" ng-click="vm.finalizar()">Concluir <i class="fa fa-check"></i></button>
+                        <!--<button angular-ripple class="btn btn-lg btn-default" ng-click="vm.passoTres()">Próximo <i class="fa fa-arrow-right"></i></button>-->
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,48 @@
+<ion-view title="Preferências">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+
+        <form name="formEmail" ng-submit="false" novalidate class="login-form">
+            <div ng-if="vm.profileLoaded && vm.userPreferencesLoaded && vm.basePreferencesLoaded" class="list list-inset" style="background-color:#FFFFFF">
+                <li class="item item-divider">
+                    <i class="fa fa-info-circle fa-lg"></i> Geral
+                </li>
+                <ion-toggle ng-checked="vm.loggedUser.flgRecebeEmail" ng-model="vm.loggedUser.flgRecebeEmail" ng-change="vm.confirmRecebeEmail(vm.loggedUser.flgRecebeEmail)" toggle-class="toggle-calm">Quero receber e-mails</ion-toggle>
+                <ion-toggle ng-checked="vm.loggedUser.flgRecebeNotificacao" ng-model="vm.loggedUser.flgRecebeNotificacao" ng-change="vm.confirmRecebeNotificacao(vm.loggedUser.flgRecebeNotificacao)" toggle-class="toggle-calm">Quero receber notificações</ion-toggle>
+                
+                <div class="item item-divider"><i class="fa fa-bank fa-lg"></i> Quero ver políticos das casas</div>
+                <ion-checkbox  
+                    ng-repeat="item in vm.instituicoes track by item.oidInstituicao"
+                    ng-init="checkedInstituicao[item.oidInstituicao] = (vm.loggedUser.preferencias.instituicoes.indexOf(item.oidInstituicao) > -1)"
+                    ng-click="vm.savePreference('instituicao', item.oidInstituicao, checkedInstituicao[item.oidInstituicao])"
+                    ng-model="checkedInstituicao[item.oidInstituicao]" 
+                    ng-checked="vm.loggedUser.preferencias.instituicoes.indexOf(item.oidInstituicao) > -1">{{item.nome}}</ion-checkbox>
+
+                <div class="item item-divider"><i class="fa fa-globe fa-lg"></i> Quero ver políticos dos Estados</div>
+                <ion-checkbox 
+                    ng-repeat="item in vm.estados track by item.uf"
+                    ng-init="checkedEstado[item.uf] = (vm.loggedUser.preferencias.estados.indexOf(item.uf) > -1)"
+                    ng-click="vm.savePreference('estado', item.uf, checkedEstado[item.uf])"
+                    ng-model="checkedEstado[item.uf]" 
+                    ng-checked="vm.loggedUser.preferencias.estados.indexOf(item.uf) > -1">{{item.nome}}</ion-checkbox>                 
+                
+                <div class="item item-divider"><i class="fa fa-group fa-lg"></i> Quero ver políticos dos partidos</div>
+                <ion-checkbox  
+                    ng-repeat="item in vm.partidos track by item.oidPartido"
+                    ng-init="checkedPartido[item.oidPartido] = (vm.loggedUser.preferencias.partidos.indexOf(item.oidPartido) > -1)"
+                    ng-click="vm.savePreference('partido', item.oidPartido, checkedPartido[item.oidPartido])"
+                    ng-model="checkedPartido[item.oidPartido]" 
+                    ng-checked="vm.loggedUser.preferencias.partidos.indexOf(item.oidPartido) > -1">{{item.sigla}}</ion-checkbox>
+                
+            </div>
+        </form><br>
+        <div class="text-center">
+            <ion-spinner class="spinner my-spinner" ng-show="!vm.profileLoaded || !vm.userPreferencesLoaded || !vm.basePreferencesLoaded"></ion-spinner>   
+        </div>
+
+         
+        
+    </ion-content>
+</ion-view>

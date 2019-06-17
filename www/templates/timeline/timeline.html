@@ -1,0 +1,289 @@
+<ion-view title="Linha do tempo">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content"> 
+        <script id="detalhe-proposicao.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive azul-bandeira"  ng-click="modal.hide()">
+                <h1 class="title"><i class="fa fa-question-circlex"></i> Mais informações</h1>
+                <div class="buttons buttons-right header-item">
+                    <span class="right-buttons">
+                        <i class="fa fa-close fa-lg icon-search"></i>
+                    </span>
+                </div>
+            </ion-header-bar>
+            <ion-content class="modal-contents">
+                <h3>{{vm.proposicaoDetalhe.tipo}}-{{vm.proposicaoDetalhe.numero}}/{{vm.proposicaoDetalhe.ano}}</h3>
+                <p class="small">Votado em {{vm.proposicaoDetalhe.dataHoraEvento | date: 'dd/MM/yyyy'}}</p>
+                <p ng-if="vm.proposicaoDetalhe.objeto != ''"><strong>{{vm.proposicaoDetalhe.objeto}}</strong></p>
+                <p ng-if="vm.proposicaoDetalhe.resumo != ''">{{vm.proposicaoDetalhe.resumo}}</p>
+                <p ng-if="vm.proposicaoDetalhe.ementa != ''">{{vm.proposicaoDetalhe.ementa}}</p>
+                <p ng-if="vm.proposicaoDetalhe.url != ''">
+                    <button ng-click="vm.inteiroTeor(vm.proposicaoDetalhe.url)" angular-ripple type="button" class="btn btn-xs btn-block btn-primary type="button" class="btn btn-link btn-link-custom small"><i class="fa fa-external-link fa-lg"></i> Ver inteiro teor</a></button>
+                </p>
+                <button ng-click="modal.hide()" angular-ripple type="button" class="btn btn-xs btn-block btn-default type="button" class="btn btn-link btn-link-custom small"><i class="fa fa-close fa-lg"></i> Fechar</a></button> 
+
+            </ion-content>
+          </ion-modal-view>
+        </script>
+        <ion-refresher pulling-text="Atualizar..." on-refresh="vm.initController()"></ion-refresher>
+        <section>
+
+           
+            <div class="caption sr-user-profile">
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-sm-4 col-xs-4 text-center" style="padding-right: 0;padding-left: 20px;">
+                        <img ng-click="vm.editProfile()" style="width: 100%; " class="img-thumbnail" ng-src="{{vm.loggedUser.arquivoImagem || 'assets/img/default-user.png'}}" />
+                        
+
+                    </div>
+                    <div class="col-sm-8 col-xs-8" style="padding-right: 0;">
+                        <p style="margin-top: 0" ng-click="vm.wizard()"><b>{{userInfo.nome}}</b><br>
+                            <span class="small">
+                                <ng-pluralize count="vm.opinioes" when="{'0' : 'Ainda não opinou.', 'other' : 'Opinou em {} votações.'}"></ng-pluralize>
+                                <ng-pluralize count="userInfo.friendsCount" when="{'0' : 'Não monitora ninguém.', 'one' : 'Monitora um político', 'other' : 'Monitora {} políticos'}"></ng-pluralize> 
+                                <ng-pluralize 
+                                        count="vm.preferencias.estados.length" 
+                                        when="{'0' : 'em todos os estados', 'one' : 'em {{vm.preferencias.estados[0]}}', 'other' : 'em {} estados'}"></ng-pluralize>
+                                <ng-pluralize 
+                                        count="vm.preferencias.partidos.length" 
+                                        when="{'0' : 'e todos os partidos.', 'one' : 'e o {{vm.preferencias.partidos[0]}}.', 'other' : 'e {} partidos.'}"></ng-pluralize> <i class="fa fa-cog fa-lg"></i>
+                            </span>  
+                            
+                            <div style="padding-top: 7px">
+                                    <i class="fa fa-lg h-center"
+                                    ng-click="vm.socialShare('facebook')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'facebook', 
+                                        'fa-facebook-square' : !vm.sharingPlataforma}"></i>&nbsp; <i class="fa fa-lg h-center"
+                                    ng-click="vm.socialShare('whatsapp')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'whatsapp', 
+                                        'fa-whatsapp' : !vm.sharingPlataforma}"></i>&nbsp; <i class="fa fa-lg h-center"
+                                    ng-click="vm.socialShare('twitter')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'twitter', 
+                                        'fa-twitter-square' : !vm.sharingPlataforma}"></i>&nbsp; <i class="fa fa-lg h-center"
+                                    ng-click="vm.socialShare('')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == '', 
+                                        'fa-share-alt' : !vm.sharingPlataforma}"></i> 
+                                </div>                            
+
+                        </p>
+
+                     
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="padding">
+                <div class="panel panel-default" style="margin-bottom: 0">
+                    <div class="panel-body">
+
+                        <!-- <div ng-click="vm.openCloseRepresentantes()"> -->
+                        <div ng-click="vm.advisor()">
+                            <!-- <i ng-class="{'fa-window-close' : !vm.isCollapsedRepresentantes, 'fa-window-restore' : vm.isCollapsedRepresentantes}" class="fa pull-right"></i> -->
+                            <p><strong>Quem te representa?</strong></p>
+                            <p class="small">
+                                <i class="fa fa-hand-o-up fa-2x pull-left"></i>
+                                Como você votaria se fosse um político? Opine nas votações de cada casa e veja quem votou mais parecido com você.
+                            </p>                      
+                        </div>
+                        <!-- 
+                        <div uib-collapse="vm.isCollapsedRepresentantes">
+
+                            <ul class="list">
+                                <li class="animated-item-fadeIn item item-pequeno" style="white-space: normal; border: 0" ng-repeat="instituicao in vm.representantes">
+                                    <div ng-if="!instituicao.representantes">
+                                        <div class="media-left" ng-if="!instituicao.representantes">
+                                            <div class="image-mini"><img class="thumbnail" check-image-politico="" ng-src="assets/img/default-undefined-user.png"></div>
+                                        </div>
+                                        <div class="media-body small">
+                                            <p class="small">{{instituicao.nome}}</p>
+                                            <div class="small">Ainda não calculado. Opine em mais {{instituicao.interacoesRestantes}} votações.</div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="instituicao.representantes" ng-repeat="representante in instituicao.representantes" ng-click="vm.politicianDetail(representante.oidPolitico)">
+                                        <div class="media-left">
+                                            <div class="image-mini"><img class="thumbnail" check-image-politico="" ng-src="{{vm.configuracao.baseImagemPolitico + representante.arquivoFotoLocal}}"></div>
+                                        </div>
+                                        <div class="media-body small">
+                                            <p class="small">{{instituicao.nome}}</p>
+                                            <b>{{representante.politico}} <span class="small">{{representante.sigla}}-{{representante.uf}}</span></b>
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        -->
+                    </div>
+                </div>               
+            </div>
+            
+            <!-- 
+           <div class="padding">
+                <div class="panel panel-default" style="margin-bottom: 0" ng-repeat="quiz in vm.quizzes">
+                    <div class="panel-body">
+                        <div style="padding-bottom: 10px">
+                            
+                            <p><strong>{{quiz.titulo}}</strong></p>
+                            <p class="small">
+                            <i class="fa fa-hand-o-up fa-2x pull-left"></i>
+                            {{quiz.descricao}}</p>
+                            <button angular-ripple class="btn btn-xs btn-block btn-danger" ng-click="vm.quiz(quiz.oidQuizVotacao)">
+                                <span ng-if="quiz.stats.totalRespostas == 0">Responder</span> 
+                                <span ng-if="quiz.stats.totalRespostas != 0 && quiz.stats.totalPerguntas != quiz.stats.totalRespostas">Continuar respondendo</span> 
+                                <span ng-if="quiz.stats.totalPerguntas == quiz.stats.totalRespostas">Revisar minhas respostas</span> 
+                                <i class="fa fa-arrow-right"></i>
+                            </button>                            
+                        </div>
+                        
+                       <div ng-if="quiz.stats.totalPerguntas == quiz.stats.totalRespostas && quiz.detalhes.politico">
+                           <h4>Resultado</h4>
+                            <div ng-click="vm.politicianDetail(quiz.detalhes.oidPolitico)">
+                                <div class="media-left">
+                                    <div class="image-mini"><img class="thumbnail" check-image-politico="" ng-src="{{vm.configuracao.baseImagemPolitico + quiz.detalhes.arquivoFotoLocal}}"></div>
+                                </div>
+                                <div class="media-body">
+                                    <p class="sr-minimo" style="margin:0">O político que mais te representa é:</p>
+                                    <b>{{quiz.detalhes.politico}}</b>
+                                    <p class="small">{{quiz.detalhes.partido}}-{{quiz.detalhes.uf}}</p>
+                                </div>
+                            </div>  
+                            <div>
+                                <div class="media-body">
+                                    <p class="sr-minimo" style="margin:0">Sua opinião é aderente a partidos de <strong>{{quiz.detalhes.ideologia}}</strong></p>
+                                </div>
+                            </div> 
+                       </div>
+                       
+                        <div ng-if="quiz.stats.totalPerguntas != quiz.stats.totalRespostas">
+                            <h4><i class="fa fa-frown-o pull-left"></i> Ainda não temos o seu resultado!</h4>
+                        </div>
+                    
+
+                    </div>
+                </div>               
+           </div>
+            -->
+            
+            <section class="text-center">
+                <div class="sr-tab-panel">
+                    <!-- <ul class="nav nav-tabs" role="tab-list">
+                        <li role="presentation" ng-click="vm.votacoes()" ng-class="{'active' : vm.abaAtiva == 'votacoes'}"><a href="#" aria-controls="votacoes" role="tab" data-toggle="tab">Votações</a></li>
+                        <li role="presentation" ng-click="vm.assiduidades()" ng-class="{'active' : vm.abaAtiva == 'assiduidades'}"><a href="#" aria-controls="presenca" role="tab" data-toggle="tab">Assiduidade</a></li>
+                        <li role="presentation" class="sr-barra-share"> </li>
+                    </ul>-->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane" ng-class="{'active' : vm.abaAtiva == 'votacoes'}" id="votacoes" style="padding: 10px 0">
+                            <div class="eventos-title">Como você votaria?</div>
+                            <p class="small">Aplicar filtros</p>
+                            <div class="center-block">
+
+                                <div class="btn-group-xs">
+                                    <button type="button" class="btn btn-default" ng-class="{'btn-warning' : vm.filtro.semavaliacao}" 
+                                            ng-click="vm.filtrar('semavaliacao')" 
+                                            type="button" class="btn btn-link btn-link-custom small">
+                                    <i class="fa" ng-class="{'fa-check' : vm.filtro.semavaliacao, 'fa-close' : !vm.filtro.semavaliacao}" aria-hidden="true"></i> Não respondido
+                                    </button>
+                                    <button type="button" class="btn btn-default" ng-class="{'btn-warning' : vm.filtro.comavaliacao}" 
+                                            ng-click="vm.filtrar('comavaliacao')" 
+                                            type="button" class="btn btn-link btn-link-custom small">
+                                    <i class="fa" ng-class="{'fa-check' : vm.filtro.comavaliacao, 'fa-close' : !vm.filtro.comavaliacao}" aria-hidden="true"></i> Respondido
+                                    </button>
+                                </div>
+
+                                <div class="btn-group-xs">
+                                    <button style="margin:2px" type="button" class="btn btn-default" ng-class="{'btn-success' : vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada}" 
+                                            ng-click="vm.filtrar('proposicoes', instituicao.oidInstituicao)" 
+                                            ng-repeat="instituicao in vm.filtro.instituicoes" 
+                                            type="button" class="btn btn-link btn-link-custom small"
+                                            ng-if="instituicao.oidInstituicao">
+
+                                        <i class="fa" ng-class="{'fa-check' : vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada, 'fa-close' : !vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada}" aria-hidden="true"></i> {{instituicao.nome}}
+                                    </button>
+                                </div>
+
+                                <div  style="padding: 15px 15px 0 15px">
+                                    <div class="form-group has-feedback">
+                                        <input type="text" ng-model="vm.searchText" class="form-control form-control-force input-sm-force" placeholder="Buscar nas proposições" ng-blur="vm.filtrar('proposicoes')" ng-keyup="(vm.searchText.length > 3 && vm.filtrar('proposicoes')) || $event.keyCode == 13">
+                                        <span ng-if="vm.searchText" ng-click="vm.clearText()" class="glyphicon glyphicon-remove form-control-feedback" style="cursor: pointer; pointer-events: all;">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <i class="fa fa-sort-down fa-5x"></i>
+                            <div class="animated-item sr-card" ng-repeat="proposicao in vm.itensProposicoes track by proposicao.oidProposicao">
+                                <div class="item  item-text-wrap item-card" >
+                                    <div class="col-md-12 center" ng-click="vm.votosProposicao(proposicao)">
+										<h3>
+										<img ng-if="proposicao.oidInstituicao == '1' || proposicao.oidInstituicao == '2'" ng-src="{{'assets/img/ico-brasil.png'}}" />
+										<img ng-if="proposicao.oidInstituicao == '3'" ng-src="{{'assets/img/ico-mg.png'}}" />
+										<img ng-if="proposicao.oidInstituicao == '4'" ng-src="{{'assets/img/ico-rs.png'}}" />
+
+                                        {{proposicao.instituicao}}</h3>
+                                        <h3>{{proposicao.titulo ? proposicao.titulo : (proposicao.tipoProposicao + ' ' + proposicao.numero + '/' + proposicao.ano)}}</h3>
+                                        <p class="text-primary ng-binding">{{proposicao.pergunta ? proposicao.pergunta : (proposicao.explicacao ? proposicao.explicacao : proposicao.resumo)}}</p>
+                                    </div>
+                                    <div style="padding-top: 10px">
+                                        <button angular-ripple="" class="btn btn-xs btn-block btn-default" ng-class="proposicao.oidTipoNotificacao == 3 ? 'option-active btn-primary' : 'btn-default'" ng-click="vm.markAnswer(3, proposicao)"> Sim <span class="option-actions"><i class="fa fa-check"></i></span> </button>
+                                        <button angular-ripple="" class="btn btn-xs btn-block btn-default" ng-class="proposicao.oidTipoNotificacao == 4 ? 'option-active btn-primary' : 'btn-default'" ng-click="vm.markAnswer(4, proposicao)"> Não <span class="option-actions"><i class="fa fa-check"></i></span> </button>
+                                        <button ng-if="proposicao.oidInstituicao != '3' && proposicao.oidInstituicao != '4'" angular-ripple="" class="btn btn-xs btn-block btn-default" ng-class="proposicao.oidTipoNotificacao == 6 ? 'option-active btn-primary' : 'btn-default'" ng-click="vm.markAnswer(6, proposicao)"> Abstenção (não votar - conta quorum) <span class="option-actions"><i class="fa fa-check"></i></span> </button>
+                                        <button ng-if="proposicao.oidInstituicao != '3' && proposicao.oidInstituicao != '4'" angular-ripple="" class="btn btn-xs btn-block btn-default" ng-class="proposicao.oidTipoNotificacao == 7 ? 'option-active btn-primary' : 'btn-default'" ng-click="vm.markAnswer(7, proposicao)"> Obstrução (não votar - não conta quorum) <span class="option-actions"><i class="fa fa-check"></i></span> </button>
+                                        <button ng-if="proposicao.oidInstituicao != '3' && proposicao.oidInstituicao != '4'" angular-ripple="" class="btn btn-xs btn-block btn-default" ng-class="proposicao.oidTipoNotificacao == 8 ? 'option-active btn-primary' : 'btn-default'" ng-click="vm.markAnswer(8, proposicao)"> Não comparecer no plenário <span class="option-actions"><i class="fa fa-check"></i></span> </button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <p class="sr-minimo text-left">Votado <span class="sr-minimo" am-time-ago="proposicao.dataHoraEvento | amParse:'YYYY-MM-DD HH:mm:ss'"></span></p>
+                                            <p ng-click="vm.detalharProposicao(proposicao)" class="sr-minimo text-left"><i class="fa fa-info-circle"></i> Saiba mais: {{proposicao.tipo}} {{proposicao.numero}}/{{proposicao.ano}}</p>
+                                            <p ng-click="vm.votosProposicao(proposicao)" class="sr-minimo text-left"><i class="fa fa-user"></i> Veja o voto de cada político</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ion-infinite-scroll icon="ion-loading-c" ng-if="vm.abaAtiva == 'votacoes' && !vm.noMoreItemsAvailable" on-infinite="vm.loadMoreProposicoes()" distance="10%"></ion-infinite-scroll>
+                            <div class="text-center">
+                                <ion-spinner ng-show="vm.abaAtiva == 'votacoes' && !vm.noMoreItemsAvailable" class="spinner my-spinner"></ion-spinner>
+                            </div>
+                        </div>
+                        <!--
+                        <div role="tabpanel" ng-class="{'active' : vm.abaAtiva == 'assiduidades'}" class="tab-pane" id="presenca">
+                           <div class="eventos-title">Você sabe se seu político falta ao trabalho?</div>
+                            <p class="small">Aplicar filtros</p>
+                            <div class="center-block">
+                                <div class="btn-group-xs">
+                                    <button style="margin: 2px" type="button" class="btn btn-default" ng-class="{'btn-success' : vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada}" 
+                                            ng-click="vm.filtrar('presencas', instituicao.oidInstituicao)" 
+                                            ng-repeat="instituicao in vm.filtro.instituicoes" 
+                                            type="button" class="btn btn-link btn-link-custom small">
+                                    <i class="fa" ng-class="{'fa-check' : vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada, 'fa-close' : !vm.filtro.instituicoes['i' + instituicao.oidInstituicao].selecionada}" aria-hidden="true"></i> {{instituicao.nome}}
+                                    </button>
+                                </div>
+                            </div>
+                            <i class="fa fa-sort-down fa-5x"></i>
+                            <feed-items></feed-items>
+                            <ion-infinite-scroll icon="ion-loading-c" ng-if="vm.abaAtiva == 'assiduidades' && !vm.noMoreItemsAvailable" on-infinite="vm.loadMoreAssiduidade()" distance="10%"></ion-infinite-scroll>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </section>
+            <section ng-if="vm.noMoreItemsAvailable && vm.ProposicoesLoaded && userInfo.friendsCount < 1">
+                <div class="text-center padding">
+                    <div class="padding"> <i class="fa fa-meh-o fa-5x"></i> </div>
+                    <div class="padding">
+                        <p>Você ainda não está monitorando nenhum político.</p>
+                        <p>Para receber notificações, escolha políticos para monitorar.</p>
+                        <button ng-click="vm.wizard()" class="btn btn-primary btn-xs" angular-ripple>Escolher políticos</button>
+                    </div>
+                </div>
+            </section>
+            <section ng-if="vm.noMoreItemsAvailable && vm.ProposicoesLoaded && userInfo.friendsCount > 1 && vm.itensProposicoes.length < 1">
+                <div class="text-center padding">
+                    <div class="padding"> <i class="fa fa-bell-slash-o fa-4x"></i> </div>
+                    <div class="padding">
+                        <p>Não temos notificações para exibir.</p>
+                        <p>Aplique os filtros para visualizar mais itens.</p>
+                        <button ng-click="vm.wizard()" class="btn btn-primary btn-xs" angular-ripple>Escolher políticos</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,45 @@
+﻿<link rel="stylesheet" href="assets/css/form-elements.css">
+<link rel="stylesheet" href="assets/css/login.css">
+<ion-view title="Login" class="login animated fadeIn">
+    <ion-content class="gem-ion-content">
+
+        <div class="row">
+            <div class="col-sm-12 form-container">
+                <div class="logo-container"> <img class="img-responsive" check-image ng-src="assets/img/logo-sr-cidadao-branco.png" />
+                    <p>Monitore o trabalho do seu político.</p>
+                </div>
+
+				<div ng-if="!vm.versaoOK" ng-bind-html="vm.htmlMinVersao"></div>
+				
+				<div ng-if="vm.versaoOK">
+					<div class="form-container">
+						<form name="form" ng-submit="form.$valid && vm.login()" novalidate class="login-form">
+							<div class="form-group">
+								<label class="sr-only" for="username">E-mail</label>
+								<input next-on-enter type="email" name="username" placeholder="E-mail..." class="login form-email form-control" id="username" ng-model="vm.username" required>
+								<div ng-messages="form.$submitted && form.username.$error" class="help-block" ng-class="{'animated fadeIn' : form.$submitted && form.username.$error}">
+									<div ng-message="required">E-mail é obrigatório.</div>
+									<div ng-message="email">E-mail inválido.</div>                                
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="password">Senha</label>
+								<input next-on-enter type="password" name="password" placeholder="Senha..." class="login form-password form-control" id="password"  ng-model="vm.password" required >
+								<div ng-messages="form.$submitted && form.password.$error" class="help-block" ng-class="{'animated fadeIn' : form.$submitted && form.password.$error}">
+									<div ng-message="required">Senha é obrigatório</div>
+								</div>
+							</div>
+							<div ng-if="vm.errorLogin" class="alert alert-danger">{{vm.errorLogin}}</div>
+							<button type="submit" class="btn btn-block btn-lg btn-default" angular-ripple ng-disabled="vm.loading">Entrar</button>
+						</form>
+						<button type="buttom" ng-click="vm.fbLoginNativo()" angular-ripple class="btn btn-block btn-lg btn-facebook"><i class="fa fa-facebook"></i> Acesse com Facebook</button>
+					</div>
+					<div class="signup">
+						<h3 ng-click="vm.proximoSlide()" animated-custom="pulse" class="animated-item" >Cadastre-se</h3>
+						<span ng-click="vm.esqueciSenha()" animated-custom="pulse" class="animated-item" >Esqueci minha senha</span>
+					</div>                
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

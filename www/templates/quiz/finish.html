@@ -1,0 +1,71 @@
+<ion-view title="{{vm.quiz.titulo}}" class="login">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>   
+    <ion-content class="wizard">
+       
+        <script id="quiz-regras.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive azul-bandeira"  ng-click="modal.hide()">
+                <h1 class="title"><i class="fa fa-question-circlex"></i> {{vm.quiz.titulo}}</h1>
+                <div class="buttons buttons-right header-item">
+                    <span class="right-buttons">
+                        <i class="fa fa-close fa-lg icon-search"></i>
+                    </span>
+                </div>
+            </ion-header-bar>
+            <ion-content class="modal-contents" ng-bind-html="vm.quiz.regras"></ion-content>
+          </ion-modal-view>
+        </script>
+       
+        <div class="sr-slide text-center container">
+            <div class="sr-walk-content">
+                <div ng-if="!vm.calculoOk">
+                    <h3 ng-if="!vm.erroCalculo">Calculando...</h3>
+                    <div ng-if="vm.erroCalculo">
+                        <i class="fa fa-frown-o fa-5x" aria-hidden="true" style="padding: 20px"></i>
+                        <button angular-ripple style="margin: 20px" class="btn btn-lg btn-default" ng-click="vm.iniciar()">Tentar novamente <i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+                <div ng-if="vm.calculoOk">
+                    <h1>Pronto!</h1>
+                    <h4>Calculamos seu <strong>espectro político</strong> e o Deputado que <strong>mais te representa.</strong></h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6 col-xs-6"  ng-click="vm.politicianDetail(vm.politico.oidPolitico)">
+                               <p class="text-primary">Político que mais te representa</p>
+                                <div class="thumbnail" angular-ripple>
+                                    <img check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + vm.politico.arquivoFotoLocal}}" />
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading title-user">{{vm.politico.nome}} <small class="ng-binding">{{vm.politico.titulo}} {{vm.politico.sigla}}-{{vm.politico.uf}}</small> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6" ng-click="vm.detalheEspectro()">
+                               <p class="text-primary">Espectro político aderente a você</p>
+                                <div class="thumbnail" angular-ripple>
+                                    <img style="padding: 10px" class="sr-responsive-img" src="assets/img/arms-brasil.png">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading title-user">{{vm.ideologia.nome}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <p ng-click="vm.wizard()" class="text-primary small">
+                                    <i class="fa fa-cog"></i>
+                                    Calculado considerando votações de {{userInfo.friendsCount}} políticos, que você monitora.
+                                </p>  
+                            </div>
+                        </div>
+                    </div>
+                    <button angular-ripple style="margin: 20px" class="btn btn-lg btn-default" ng-click="vm.reset()">Recomeçar <i class="fa fa-refresh"></i></button>
+                </div>
+                
+                
+                <div ng-if="vm.quiz" class="small" ng-click="vm.quizRegras()">
+                    <i class="fa fa-question-circle fa-lg"></i> saiba como calculamos
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

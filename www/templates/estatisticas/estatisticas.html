@@ -1,0 +1,45 @@
+<ion-view title="Estatísticas">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+       <ion-refresher pulling-text="Atualizar..." on-refresh="vm.graficos()"></ion-refresher> 
+        <div class="item item-input-inset" style="background-color: transparent">
+            <select class="form-control" ng-model="vm.paramsGostei.uf" ng-change="vm.graficos()">
+               <option value="">Todos os Estados</option>
+                <option ng-selected="item.uf == vm.paramsGostei.uf" ng-repeat="item in vm.estados" value="{{item.uf}}">{{item.nome}}</option>
+            </select>
+            
+            <div class="text-center" ng-show="!vm.chartLoaded">
+                <ion-spinner class="spinner my-spinner"></ion-spinner>   
+            </div>                 
+        </div>     
+        <div class="thumbnail thumbnail-post animated fadeIn">
+            <div class="caption">
+                <h3 style="padding-top: 0; margin-top: 5px" class="caption"><i class="fa fa-thumbs-o-up"></i> 10 mais curtidos</h3>
+
+                <div class="text-center" ng-show="!vm.chartGostei">
+                    <ion-spinner class="spinner my-spinner"></ion-spinner>   
+                </div>                
+                                                
+                <canvas id="bar" class="chart chart-horizontalBar" chart-data="vm.chartGostei.data" chart-labels="vm.chartGostei.labels"></canvas>
+                <div class="caption">
+                    <p style="margin-bottom: 5px" class="small" ng-repeat="politico in vm.chartGosteiLabels"> {{politico}} </p>
+                </div>
+            </div>
+        </div>
+        <div class="thumbnail thumbnail-post animated fadeIn">
+            <div class="caption">
+                <h3 style="padding-top: 0; margin-top: 5px" class="caption"><i class="fa fa-thumbs-o-down"></i> 10 menos curtidos</h3>
+
+                <div class="text-center" ng-show="!vm.chartGostei">
+                    <ion-spinner class="spinner my-spinner"></ion-spinner>   
+                </div>       
+                                <canvas id="bar" class="chart chart-horizontalBar" chart-data="vm.chartNaoGostei.data" chart-labels="vm.chartNaoGostei.labels"></canvas>
+                <div class="caption">
+                    <p style="margin-bottom: 5px" class="small" ng-repeat="politico in vm.chartNaoGosteiLabels"> {{politico}} </p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

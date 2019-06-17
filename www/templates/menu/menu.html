@@ -1,0 +1,36 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive azul-bandeira">
+            <ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-b"></i> voltar</ion-nav-back-button>
+            <ion-nav-buttons side="right">
+                <search-bar></search-bar>
+            </ion-nav-buttons>            
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left"> 
+        <ion-content class="gem-sidebar dark"> 
+            <div class="list" menu-close ng-click="vm.editPreferences()">
+                <div class="row" style="margin:0">
+                    <div class="col col-33">
+                        <img class="img-responsive thumbnail" ng-src="{{vm.loggedUser.arquivoImagem || 'assets/img/default-user.png'}}" />
+                    </div>
+                    <div nav-clear class="col padding-top col-77">
+                        <p>{{userInfo.nome}}</p>
+                        <i class="fa fa-gear fa-lg" nav-clear menu-close></i> Preferências
+                    </div>
+                </div>
+            </div>     
+            <ion-list>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.feed()"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Linha do tempo</ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.friends()"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Meus políticos <span class="badge">{{userInfo.friendsCount}}</span></ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.advisor()"><i class="fa fa-bar-chart fa-fw" aria-hidden="true"></i> Político mais compatíveis</ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.search()"><i class="fa fa-search fa-fw" aria-hidden="true"></i> Buscar político</ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.lembretes()"><i class="fa fa-hand-pointer-o fa-fw" aria-hidden="true"></i> Votações importantes</ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.estatisticas()"><i class="fa fa-line-chart fa-fw" aria-hidden="true"></i> Estatísticas gerais</ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-if="vm.loggedUser.flgFacebook == '0'" ng-click="vm.editProfile()"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Meu Perfil </ion-item>
+                <ion-item class="item-ng-click" nav-clear menu-close ng-click="vm.logout()"><i class="fa fa-close fa-fw" aria-hidden="true"></i> Sair</ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

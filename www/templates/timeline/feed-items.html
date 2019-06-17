@@ -1,0 +1,63 @@
+<div class="thumbnail thumbnail-post animated-item" ng-repeat="event in vm.itensEvent track by event.oidNotificacao"> 
+    <!--caption-->
+    <div class="caption">
+        <div class="media">
+            <feed-menu ng-if="!vm.politico" class="feed-menu pull-right" data-friend="event" data-callback-apaga="vm.apagaAmigo"></feed-menu>
+            <div ng-click="vm.politicianDetail(event.oidPolitico)">
+                <div class="media-left">
+                    <div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + event.arquivoFotoLocal}}" /></div>
+                </div>
+                <div class="media-body text-left"> <a class="media-heading title-post" href="#">{{event.nome}} <small>{{event.sigla}}-{{event.uf}}</small></a> <br />
+                    <span ng-if="event.oidTipoNotificacao == '3'">
+                        <i class="fa fa-check fa-lg text-success"></i>
+                    </span>   
+
+                    <span ng-if="event.oidTipoNotificacao == '4'">
+                        <i class="fa fa-close fa-lg text-danger"></i>
+                    </span>     
+                    
+                    <span ng-if="event.oidTipoNotificacao == '6'">
+                        <i class="fa fa-ellipsis-h fa-lg"></i>
+                    </span>  
+                    
+                    <span ng-if="event.oidTipoNotificacao == '7'">
+                        <i class="fa fa-ellipsis-h fa-lg text-warning"></i>
+                    </span>                                                              
+
+                    <span ng-if="event.oidTipoNotificacao == '8'">
+                        <i class="fa fa-ellipsis-h fa-lg text-warning"></i>
+                    </span>                                                          
+                    {{event.titulo}}.
+                    <h6 class="media-legend-detail"><span am-time-ago="event.dataHoraEvento | amParse:'YYYY-MM-DD HH:mm:ss'"></span></h6>
+                </div>
+            </div>
+        </div>
+        <feed-text class="text-left" data-event="event" ng-click="vm.abreLembrete(event)"></feed-text>
+        <p class="small text-left">
+            <a style="padding-right: 10px" ng-if="event.url" ng-click="vm.inteiroTeor(event)"><i class='fa fa-plus-circle fa-lg'></i> Ver inteiro teor</a> 
+            <a ng-click="vm.compartilhar(event)">
+                <i ng-class="{ 'fa-refresh fa-spin': event.loadingShare, 'fa-facebook-square': !event.loadingShare, 'text-danger' : event.temPostFb == '1'}" class="fa fa-lg"></i>
+                <span ng-if="event.temPostFb == '0'">Compartilhar</span>
+                <span ng-if="event.temPostFb == '1'" class="text-danger">Já compartilhado</span>
+            </a>
+        </p>
+    </div>
+    <div class="links-post clearfix text-center"> 
+    
+		<a ng-class="{'like' : event.flgCurtir == '1'}" ng-click="vm.like(1, event)" class="link-post pull-left" role="button">
+			<i ng-class="{ 'fa-refresh fa-spin': event.loadingLike, 'fa-thumbs-o-up': !event.loadingLike }" class="fa"></i>
+			Gostei
+		</a>
+		<a ng-class="{'dislike' : event.flgCurtir == '0'}" ng-click="vm.like(0, event)" class="link-post" role="button">
+			<i ng-class="{ 'fa-refresh fa-spin': event.loadingDislike, 'fa-thumbs-o-down': !event.loadingDislike }" class="fa"></i>                        
+			Não gostei
+		</a>	
+			
+		<div class="pull-right"><a ng-click="vm.comment(event)" class="link-post" role="button"><i class="fa fa-envelope-o link-post"></i>Mensagem</a> 
+		<span class="badge">{{event.contaComentarios}}</span></div>
+    </div>
+</div>
+<ion-infinite-scroll icon="ion-loading-c" ng-if="!vm.noMoreItemsAvailable" on-infinite="vm.loadMoreEvents()" distance="10%"></ion-infinite-scroll>
+<div class="text-center">
+    <ion-spinner ng-show="!vm.noMoreItemsAvailable" class="spinner my-spinner"></ion-spinner>
+</div>

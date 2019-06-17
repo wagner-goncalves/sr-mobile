@@ -1,0 +1,43 @@
+<ion-view title="{{vm.sigla || 'Pesquisar'}}">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper"> <i class="icon ion-search placeholder-icon"></i>
+                <input ng-if="!vm.sigla" autofocus class="search-box" type="text" placeholder="Todos os políticos" ng-model="vm.key" ng-keyup="vm.loadMoreSearch()">
+                <input ng-if="vm.sigla" autofocus class="search-box" type="text" placeholder="Políticos do {{vm.sigla}}" ng-model="vm.key" ng-keyup="vm.loadMoreSearchPartido()">
+            </label>
+        </div>      
+        
+        <ul class="list">
+            <div ng-if="vm.info" style="padding: 10px" class="item-divider small">{{vm.info.contaPoliticos}} políticos em {{vm.info.instituicoes}}</div>
+            <li animated-custom="pulse" class="item animated-item item-pequeno" ng-repeat="item in vm.itemsPoliticos track by item.oidPolitico">
+                <div ng-click="vm.adicionarAmizade(item)" ng-if="item.seguindo == 0" class="pull-right text-center icon-search-options col-20">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-plus fa-stack-1x text-primary" aria-hidden="true"></i>
+                    </span>
+                    <h6>Monitorar</h6>
+                </div>
+                <div ng-click="vm.excluirAmizade(item)" ng-if="item.seguindo > 0" class="pull-right text-center icon-search-options col-20">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-check fa-stack-1x text-success" aria-hidden="true"></i>
+                    </span>            
+                    <h6>Monitorando</h6>
+                </div>                
+                <div ng-click="vm.politicianDetail(item)" class="col-20">
+                    <div class="media-left">
+                        <div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + item.arquivoFotoLocal}}" /></div>
+                    </div>
+                    <div class="media-body">{{item.abreviatura}} <b>{{item.nome}}</b>
+                        <p class="small">{{item.titulo}} {{item.sigla}}-{{item.uf}}</p>
+                    </div>
+                </div>
+            </li>
+            <ion-infinite-scroll icon="ion-loading-c" ng-if="!vm.noMorePoliticosAvailable" on-infinite="vm.loadMorePoliticos()" distance="10%"></ion-infinite-scroll>
+            <div class="text-center">
+                <ion-spinner ng-show="!vm.noMorePoliticosAvailable" class="spinner my-spinner"></ion-spinner>
+            </div>
+        </ul>
+    </ion-content>
+</ion-view>

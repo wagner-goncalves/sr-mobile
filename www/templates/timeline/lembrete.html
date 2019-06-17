@@ -1,0 +1,78 @@
+<ion-view title="Você se lembra?">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <ion-refresher pulling-text="Atualizar..." on-refresh="vm.initController()"></ion-refresher>    
+        <section>
+         
+            <section>
+                <div class="thumbnail thumbnail-post" style="margin-bottom: 0 !important;">
+                    <div class="caption">
+                        <div> {{vm.lembrete.titulo}}</div>
+                        <div style="width:100%; display:flex">
+                            <h2>{{vm.lembrete.chamada}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>   
+            
+            
+            
+            <div ng-if="!vm.notificacoes" class="thumbnail thumbnail-post animated fadeIn">
+                
+                <div angular-ripple ng-click="vm.editPreferences()" ng-if="userInfo.friendsCount > 0" class="row small barra-monitorando">
+                    <div class="col col-75">
+                        <ng-pluralize 
+                            count="vm.preferencias.estados.length" 
+                            when="{'0' : 'Monitorando todos os estados', 'one' : 'Monitorando {{vm.preferencias.estados[0]}}', 'other' : 'Monitorando {} estados'}"></ng-pluralize>
+                        &nbsp;e&nbsp;                
+                        <ng-pluralize 
+                            count="vm.preferencias.partidos.length" 
+                            when="{'0' : 'todos os partidos.', 'one' : 'o {{vm.preferencias.partidos[0]}}.', 'other' : '{} partidos.'}"></ng-pluralize>
+                    </div>
+                    <div class="col col-25 text-right">
+                        <a><i class="fa fa-edit"></i> ALTERAR</a>
+                    </div>
+                </div>                   
+            </div>            
+            
+            
+            
+            <section class="timeline text-center">
+                <div class="eventos-title" ng-if="!vm.notificacoes"><i class="fa fa-bell-o fa-lg" aria-hidden="true"></i> ALERTAS</div>
+                <div ng-if="vm.notificacoes" style="padding-bottom: 15px">
+                    <div class="eventos-title"><i class="fa fa-bell-o fa-lg" aria-hidden="true"></i> ÚLTIMAS NOTIFICAÇÕES</div>
+                    <button class="btn btn-primary" ng-click="vm.reloadFeed()">Ver todas as Notificações</button>
+                </div>
+                <feed-items></feed-items>
+            </section>
+            
+            <section ng-if="vm.EventsLoaded && userInfo.friendsCount < 1">
+                <div class="text-center padding">
+                    <div class="padding">
+                        <i class="fa fa-meh-o fa-5x"></i>
+                    </div>
+                    <div class="padding">
+                        <p>Você ainda não está monitorando nenhum político.</p>
+                        <p>Para receber notificações, escolha políticos para monitorar.</p>
+                        <button ng-click="vm.searchPanel()" class="btn btn-primary btn-xs" angular-ripple>Escolher políticos</button>
+                    </div>
+                </div>
+            </section>            
+            
+            <section ng-if="vm.EventsLoaded && userInfo.friendsCount > 1 && vm.itensEvent.length < 1">
+                <div class="text-center padding">
+                    <div class="padding">
+                        <i class="fa fa-bell-slash-o fa-4x"></i>
+                    </div>
+                    <div class="padding">
+                        <p>Você ainda não tem notificações.</p>
+                        <p>Monitore mais políticos para receber mais notificações</p>
+                        <button ng-click="vm.searchPanel()" class="btn btn-primary btn-xs" angular-ripple>Escolher políticos</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </ion-content>
+</ion-view>

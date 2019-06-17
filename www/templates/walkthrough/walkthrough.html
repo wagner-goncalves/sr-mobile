@@ -1,0 +1,57 @@
+<ion-view title="Bem-vindo" class="login">
+    <ion-content scroll="false">
+    <ion-slide-box>
+        <ion-slide class="sr-slide text-center container">
+            <div class="sr-walk-header">
+                <img class="sr-responsive-img" src="assets/img/sr-cidadao.png">
+            </div>
+            <div class="sr-walk-content">
+                <h1>Bem-vindo,<br />Sr. Cidadão</h1>
+                <h4>Monitore o trabalho do seu político.</h4>
+                <h6>Rápido, fácil e descomplicado!</h6>
+                <button class="btn btn-link" ng-click="vm.feed()">Pular</button><button angular-ripple class="btn btn-default" ng-click="vm.next()">Próximo</button><br>
+            </div>
+        </ion-slide>
+        <ion-slide class="sr-slide text-center container">
+            <div class="sr-walk-header">
+                <img class="sr-responsive-img" src="assets/img/sr-map.png">
+            </div>
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-gear"></i> Configure</h1>
+                <h4>Escolha quais estados, partidos e políticos deseja monitorar.</h4>
+                <h6>Por padrão configuramos todos os políticos do seu estado.</h6>
+                <button class="btn btn-link" ng-click="vm.feed()">Pular</button><button angular-ripple class="btn btn-default" ng-click="vm.next()">Próximo</button>
+            </div>
+        </ion-slide>
+        <ion-slide class="sr-slide text-center container">
+            <div class="sr-walk-header">
+                <img class="sr-responsive-img" src="assets/img/sr-monitor.png">
+            </div>
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-bar-chart"></i> Monitore</h1>
+                <h4>O Sr.Cidadão envia para você eventos importantes como votações e presença do seu político.</h4>
+                <button class="btn btn-link" ng-click="vm.feed()">Pular</button><button angular-ripple class="btn btn-default" ng-click="vm.next()">Próximo</button>
+            </div>
+        </ion-slide>
+        <ion-slide class="sr-slide text-center container">
+            <div class="sr-walk-header">
+                <img class="sr-responsive-img" src="assets/img/sr-share.png">
+            </div>
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-thumbs-o-up"></i> Interaja</h1>
+                <h4>Compartilhe, comente e opine sobre as ações dos políticos que você monitora.</h4>
+                <button class="btn btn-link" ng-click="vm.feed()">Pular</button><button angular-ripple class="btn btn-default" ng-click="vm.next()">Próximo</button>
+            </div>
+        </ion-slide>
+        <ion-slide class="sr-slide text-center container">
+            <div class="sr-walk-header">
+                <img class="sr-responsive-img" src="assets/img/sr-bandeira.png">
+            </div>
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-check"></i> Escolha certo</h1>
+                <h4>Com base em sua opinião, faça um ranking de políticos que você mais (ou menos) gosta.</h4>
+                <button angular-ripple class="btn btn-default" ng-click="vm.feed()">Abrir o Sr.Cidadão</button>
+            </div>
+        </ion-slide>
+    </ion-slide-box>
+</ion-view>

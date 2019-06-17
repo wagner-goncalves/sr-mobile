@@ -1,0 +1,127 @@
+<ion-view title="{{vm.politico.nome}}">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <ion-refresher pulling-text="Atualizar..." on-refresh="vm.initController()"></ion-refresher>
+        <div class="thumbnail thumbnail-post animated fadeIn">
+            <div class="caption">
+                <div class="media" style="text-align:center">                  
+
+                    <div ng-if="vm.detailLoaded">
+                        <div class="image-profile">
+                            <img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + vm.politico.arquivoFotoLocal}}" />
+                            <jk-rating-stars max-rating="5" rating="vm.rating" on-rating="vm.registraRating(rating)" ></jk-rating-stars>  
+                        </div>
+                        <div class="media-body">
+                            <div class="media-heading title-user"><small>{{vm.politico.instituicao}}</small> {{vm.politico.nome}} <small>{{vm.politico.sigla}}-{{vm.politico.uf}}</small> </div>
+                            <h6 ng-show="!vm.contadoresLoaded"><i class="fa h-center fa-refresh fa-spin"></i></h6>
+                            <span ng-if="vm.contadoresLoaded">
+                               
+                               
+                               
+                                <div class="sr-minimo">
+                                    <span ng-if="vm.politico.evolucaoBens > 0">Aumentou seus bens em {{vm.politico.evolucaoBens}}%</span>
+                                    <span ng-if="vm.politico.evolucaoBens < 0">Diminuiu seus bens em {{vm.politico.evolucaoBens}}%</span>
+                                    <span ng-if="vm.politico.evolucaoReceitas > 0">&bull; Aumentou receitas de campanha em {{vm.politico.evolucaoReceitas}}%</span>
+                                    <span ng-if="vm.politico.evolucaoReceitas < 0">&bull; Diminuiu receitas de campanha em {{vm.politico.evolucaoReceitas}}%</span>
+                                    <span ng-if="vm.politico.evolucaoDespesas > 0">&bull; Aumentou despesas de campanha em {{vm.politico.evolucaoDespesas}}%</span>
+                                    <span ng-if="vm.politico.evolucaoDespesas < 0">&bull; Diminuiu de despesas de campanha em {{vm.politico.evolucaoDespesas}}%</span> 
+                                    <span ng-if="vm.politico.valoVoto > 0">&bull; "Pagou" R${{vm.politico.valoVoto}} por voto na última eleição</span>
+                                    <span ng-if="vm.politico.quantidadeCitacoes > 0">&bull; Citado/investigado em {{vm.politico.quantidadeCitacoes}} casos</span>
+                                    <span ng-if="vm.politico.percentualPresenca > 0">&bull; {{vm.politico.percentualPresenca}}% de presença em plenário</span>
+                                    
+                                    &bull; <ng-pluralize count="vm.politico.quantidadeVotaComoVoce" when="{'0' : 'Vota como você em nenhuma matéria ', 'one' : 'Vota como você em uma matéria', 'other' : 'Vota como você em {} matérias '}"></ng-pluralize>
+                                </div>  
+                               
+                               
+                                <h6>
+                                    <span ng-if="vm.politico.votaIgual > 0">Vota como você em <b>{{vm.politico.votaIgual}} de {{vm.politico.totalVotos}} proposições</b> &bull; </span>
+                                    <ng-pluralize count="vm.politico.seguidores" when="{'0' : 'Ninguém monitorando', 'one' : 'Um eleitor monitorando', 'other' : '{} eleitores monitorando'}"></ng-pluralize>
+                                    <!--&#8226;
+                                    <ng-pluralize count="vm.politico.notificacoes" when="{'0' : 'Nenhum alerta', 'one' : 'Um alerta', 'other' : '{} alertas'}"></ng-pluralize>
+                                    &bull;
+                                    <i class="fa fa-thumbs-o-up"></i> {{vm.politico.curtidasTotais}}
+                                    -->
+                                </h6>
+                            </span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-info btn-md btn-block" ng-click="vm.ficha(vm.idPolitico)"><i class="fa fa-info-circle" aria-hidden="true"></i> VEJA: resumo de gastos, assiduidade, eleições... </button>
+
+                    <button type="button" class="btn btn-primary btn-xs btn-block" ng-click="vm.adicionarAmizade(vm.politico)" ng-if="vm.politico.seguindo == 0"><i class="fa fa-user" aria-hidden="true"></i> Quero monitorar </button>
+
+                    <button type="button" class="btn btn-success btn-xs btn-block" ng-click="vm.excluirAmizade(vm.politico)" ng-if="vm.politico.seguindo > 0"><i class="fa fa-user" aria-hidden="true"></i> Já estou monitorando </button>
+
+                                                            
+                </div>
+                <!--
+                <div class="media text-center divider">
+                    <div animated-custom="pulse" class="media-body">
+                        <div ng-click="vm.adicionarAmizade(vm.politico)" ng-if="vm.politico.seguindo == 0">
+                           <i class="fa fa-plus" aria-hidden="true"></i> 
+                           <i class="fa fa-address-book-o fa-lg" aria-hidden="true"></i>
+                            <h6>Quero monitorar</h6>
+                        </div>
+                        <div ng-click="vm.excluirAmizade(vm.politico)" ng-if="vm.politico.seguindo > 0"><i class="fa fa-minus" aria-hidden="true"></i> <i class="fa fa-address-book-o fa-lg icon-strong" aria-hidden="true"></i>
+                            <h6 class="icon-strong">Não quero monitorar</h6>
+                        </div>
+                    </div>
+                    <div animated-custom="pulse" ng-click="vm.advisor()" class="media-body"><i class="fa fa-bar-chart fa-lg" aria-hidden="true"></i>
+                        <h6>Abrir conselheiro</h6>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+        <section class="timeline text-center">
+           
+           
+
+            <div class="eventos-title">Veja como trabalha o político</div>
+            <p class="small">Aplicar filtros</p>
+            <div class="center-block">
+                <div class="btn-group btn-group-xs">
+                    <button ng-class="{'btn-success' : vm.filtro.proposicoes}" 
+                        ng-click="vm.filtrar('proposicoes')" 
+                        type="button" class="btn btn-default btn-xs"> <i class="fa" ng-class="{'fa-check' : vm.filtro.proposicoes, 'fa-close' : !vm.filtro.proposicoes}" aria-hidden="true"></i> Proposições</button>
+                    <button ng-class="{'btn-success' : vm.filtro.presencas}" 
+                        ng-click="vm.filtrar('presencas')" 
+                        type="button" class="btn btn-default btn-xs"> <i class="fa" ng-class="{'fa-check' : vm.filtro.presencas, 'fa-close' : !vm.filtro.presencas}" aria-hidden="true"></i> Assiduidade</button>
+                </div><br />
+
+                <div class="btn-group btn-group-xs" style="padding: 5px; height: 20px">
+                    <button ng-class="{'btn-success' : vm.filtro.semavaliacao}" 
+                        ng-click="vm.filtrar('semavaliacao')" 
+                        type="button" class="btn btn-default btn-xs"> <i class="fa" ng-class="{'fa-check' : vm.filtro.semavaliacao, 'fa-close' : !vm.filtro.semavaliacao}" aria-hidden="true"></i> Sem avaliação</button>
+                    <button ng-class="{'btn-success' : vm.filtro.gostei}" 
+                        ng-click="vm.filtrar('gostei')" 
+                        type="button" class="btn btn-default btn-xs"> <i class="fa" ng-class="{'fa-check' : vm.filtro.gostei, 'fa-close' : !vm.filtro.gostei}" aria-hidden="true"></i> Gostei</button>
+                </div>
+
+            </div>
+            <i class="fa fa-sort-down fa-5x" style="padding-bottom: 10px"></i>           
+            <feed-items></feed-items>
+        </section>
+        <div ng-if="vm.politico.seguindo == 0 && vm.itensEvent.length == 0">
+            <div class="text-center padding">
+                <div class="padding"> <i class="fa fa-plus fa-4x" aria-hidden="true"></i> <i class="fa fa-address-book-o fa-4x" aria-hidden="true"></i> </div>
+                <div class="padding">
+                    <p>Você não monitora este político.</p>
+                    <p>Para visualizar e receber notificações, você deve monitorá-lo.</p>
+                    <button ng-click="vm.adicionarAmizade(vm.politico)" class="btn btn-primary" angular-ripple>Quero monitorar</button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="vm.politico.seguindo == 1 && vm.eventosProcessados && vm.itensEvent.length == 0" class="text-center">
+            <div class="text-center padding">
+                <div class="padding"> <i class="fa fa-bell-o fa-4x"></i> </div>
+                <div class="padding">
+                    <p>Não temos notificações para exibir.</p>
+                    <p>Monitore mais políticos e receba mais notificações.</p>
+                    <button ng-click="vm.searchPanel()" class="btn btn-primary" angular-ripple>Escolher políticos</button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

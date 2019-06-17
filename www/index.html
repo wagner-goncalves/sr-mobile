@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>	
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    
+    <script src="cordova.js"></script>
+
+    <link rel="stylesheet" href="lib/ionic/css/ionic.css">
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- IONIC/ANGULAR -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/angular-ios9-uiwebview.patch.js"></script>
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/moment/locale/pt-br.js"></script>    
+    <script src="lib/angular-moment/angular-moment.js"></script>
+    <script src="lib/angular-messages/angular-messages.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="lib/ngstorage/ngStorage.js"></script>
+    <script src="lib/ng-cordova.min.js"></script>
+    <script src="lib/ionic-native-transitions/dist/ionic-native-transitions.min.js"></script>
+    <link rel="stylesheet" href="lib/angular-jk-rating-stars/jk-rating-stars.min.css">
+    <script src="lib/angular-jk-rating-stars/jk-rating-stars.min.js"></script>
+    
+    <script src="lib/angular/angular-locale_pt-br.js"></script>
+	
+    
+    
+    <script src="lib/ngOpenFB/ngOpenFB.min.js"></script>
+    
+    <script src="lib/chart.js/Chart.min.js"></script>
+    <script src="lib/angular-chart.js/angular-chart.min.js"></script>       
+	<script src="lib/Chart.PieceLabel/Chart.PieceLabel.min.js"></script>
+
+    <!-- APP -->
+    <script src="js/app.js"></script>
+    
+    <script src="js/directives/authentication.directive.js"></script>  
+    <script src="js/directives/tags.directive.js"></script>   
+    <script src="js/directives/error.directive.js"></script>   
+        
+        
+    <script src="js/services/authentication.service.js"></script> 
+    <script src="js/services/local-storage.service.js"></script> 
+    <script src="js/services/usuario.service.js"></script>
+    <script src="js/services/politico.service.js"></script>
+    <script src="js/services/search.service.js"></script>
+    <script src="js/services/connectivity-monitor.js"></script>
+    <script src="js/services/http-interceptor.js"></script> 
+    <script src="js/services/feed.service.js"></script> 
+    <script src="js/services/info.service.js"></script> 
+    <script src="js/services/location.service.js"></script> 
+    <script src="js/services/message.service.js"></script> 
+    <script src="js/services/preferencias.service.js"></script> 
+    <script src="js/services/photo.service.js"></script> 
+    <script src="js/services/facebook.service.js"></script> 
+    <script src="js/services/root-scope.service.js"></script> 
+    <script src="js/services/notification.service.js"></script> 
+    <script src="js/services/machinelearning.service.js"></script> 
+	<script src="js/services/configuration.service.js"></script> 
+    <script src="js/services/lembrete.service.js"></script> 
+    <script src="js/services/erro.service.js"></script> 
+    <script src="js/services/analytics.service.js"></script> 
+    <script src="js/services/estatisticas.service.js"></script> 
+    <script src="js/services/file.service.js"></script> 
+    <script src="js/services/socialsharing.service.js"></script> 
+    <script src="js/services/ficha.service.js"></script> 
+    <script src="js/services/quiz.service.js"></script> 
+    
+    <script src="templates/home/home.controller.js"></script>
+    <script src="templates/login/login.controller.js"></script>
+    <script src="templates/menu/menu.controller.js"></script>
+    <script src="templates/friends/friends.controller.js"></script>  
+    <script src="templates/friend/friend.controller.js"></script>      
+    <script src="templates/feed/feed.controller.js"></script>   
+    <script src="templates/timeline/timeline.controller.js"></script>    
+    <script src="templates/search/search.controller.js"></script>  
+    <script src="templates/user/profile.controller.js"></script>
+    <script src="templates/advisor/advisor.controller.js"></script>
+    <script src="templates/error/error.controller.js"></script>
+    <script src="templates/lembrete/lembrete.controller.js"></script>
+    <script src="templates/walkthrough/walkthrough.controller.js"></script>
+    <script src="templates/estatisticas/estatisticas.controller.js"></script>
+    <script src="templates/ficha/ficha.controller.js"></script>
+    <script src="templates/quiz/quiz.controller.js"></script>
+    <script src="templates/quiz/resultadoquiz.controller.js"></script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTntvMeFUUUKu1eMxb8ih9pS4os74J2cA" type="text/javascript"></script>
+    
+    <!-- Fake backend -->
+    <script src="lib/angular-mocks/angular-mocks.js"></script>
+    <script src="js/helpers/fake-backend.js"></script>    
+    
+    <!-- Notificações -->
+    <link rel="stylesheet" href="lib/angular-ui-notification/angular-ui-notification.min.css">
+    <script src="lib/angular-ui-notification/angular-ui-notification.min.js"></script>    
+    
+    <link rel="stylesheet" href="lib/ng-notifications-bar/ngNotificationsBar.min.css">
+    <script src="lib/ng-notifications-bar/ngNotificationsBar.min.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>   
+    
+    <!-- Filter -->
+    <script src="lib/angular-filter/angular-filter.min.js"></script>    
+    
+    <!-- RIPPLE -->
+    <script src="lib/angular-ripple/angular-ripple.js"></script>               
+    
+    <!-- UI Bootstrap -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="lib/angular-ui-bootstrap/ui-bootstrap-csp.css">
+    <script src="lib/angular-ui-bootstrap/ui-bootstrap.js"></script>    
+    
+    <!-- MASKS -->
+    <script src="lib/angular-input-masks/angular-input-masks-dependencies.min.js"></script> 
+    <script src="lib/angular-input-masks/angular-input-masks.br.min.js"></script>
+
+  </head>
+  <body ng-app="SrCidadao">
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>

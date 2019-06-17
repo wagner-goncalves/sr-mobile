@@ -1,0 +1,116 @@
+<ion-view title="Conselheiro">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <ion-refresher pulling-text="Atualizar..." on-refresh="vm.initController()"></ion-refresher> 
+
+        <div class="tab-content text-center padding">
+            <div class="eventos-title" >Como você votaria se fosse um político? 
+                ( <span ng-click="vm.wizard()" class="small" ng-repeat="estado in vm.preferencias.estados" >{{estado}} </span> 
+                <i class="fa fa-cog"></i> )
+            </div>
+            <div>Com base em sua opinião, veja quem votou mais parecido com você.</div>
+
+            <p class="small">Aplicar filtros</p>
+            <div class="center-block text-center">
+                <div class="btn-group-xs">
+                    <button type="button" style="margin:2px" class="btn btn-default" 
+                           ng-class="{'btn-success' : vm.instituicao == instituicao.oidInstituicao}" 
+                            ng-click="vm.filter(vm.order, vm.politicianType, instituicao.oidInstituicao)"
+                            ng-repeat="instituicao in vm.instituicoes" 
+                            type="button" class="btn btn-link btn-link-custom small">
+                        {{instituicao.nome}}
+                    </button>
+                </div>
+
+
+                    <span class="small">Ordenar por
+                            <button ng-class="{'btn-selected-like' : vm.order == 'curtidas'}" type="button" class="btn btn-sm btn-link btn-link-custom" ng-click="vm.filter('curtidas', vm.politicianType)"><i class="fa fa-chevron-up fa-fw"></i> mais gostei</button> 
+                            <button ng-class="{'btn-selected-dislike' : vm.order == 'descurtidas'}" type="button" class="btn btn-sm btn-link btn-link-custom" ng-click="vm.filter('descurtidas', vm.politicianType)"><i class="fa fa-chevron-down fa-fw"></i> menos gostei</button>
+                    </span>
+
+
+            </div>
+            <i class="fa fa-sort-down fa-5x"></i>
+        </div>
+
+        <section ng-if="vm.advisorProcessado && vm.friends.length < 1">
+            <div class="text-center padding">
+                <div class="padding">
+                    <i class="fa fa-bar-chart fa-5x"></i>
+                </div>
+                <div class="padding">
+                    <p><strong>É simples!</strong> Mostramos aqui a contagem das publicações e dos alertas que você gostou e dos que não gostou.</p>
+                    <p>Assim fica mais fácil encontrar o político que está mais sintonizado com você.</p>
+                </div>
+                <div class="padding">
+                    <i class="fa fa-meh-o fa-5x"></i>
+                </div>
+                <div class="padding">
+                    <p>Você ainda não interagiu com nenhuma votação desta instituição.</p>
+                    <button ng-click="vm.searchPanel()" class="btn btn-primary btn-xs">Pesquisar nos políticos</button>
+                </div>
+            </div>
+        </section>        
+        
+        
+        <ul class="list">
+            <li ng-click="vm.politicianDetail(friend.oidPolitico)" animated-custom="pulse" class="item animated-item" style="padding: 0px; white-space: normal;" ng-repeat="friend in vm.friends track by friend.oidPolitico">
+                <div class="row" style="margin:0">
+                    <div class="col col-10 small">{{$index + 1}}</div>
+                    <div class="col col-20"><div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + friend.arquivoFotoLocal}}" /></div></div>
+                    <div class="col col-70">
+                       <div class="row" style="margin:0; padding: 0">
+                            <div class="col col-50" style="margin:0; padding: 0">
+                                <div class="progress" style="margin-bottom: 5px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{friend.percentualGostei}}" aria-valuemin="0" aria-valuemax="100" style="width:{{friend.percentualGostei}}%"></div>
+                                    <div class="progress-bar progress-bar-stats"></div>
+                                </div>
+                            </div>
+                            <div class="col col-50 small" style="margin:0; padding: 0 0 0 5px">
+                                <span class="str-only sr-minimo" >{{friend.curtidas}} votos compatíveis</span>
+                            </div> 
+                        </div>
+                        <!--
+                        <div class="row" style="margin:0; padding: 0">
+                            
+                            <div class="col col-67" style="margin:0; padding: 0">                                                       
+                                <div class="progress" style="margin-bottom: 5px;">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{friend.percentualNaoGostei}}" aria-valuemin="0" aria-valuemax="100" style="width:{{friend.percentualNaoGostei}}%"></div>
+                                    <div class="progress-bar progress-bar-stats"></div>                            
+                                </div> 
+                            </div>
+                            <div class="col col-33 small" style="margin:0; padding: 0 0 0 5px">
+                                <span class="str-only small" >{{friend.descurtidas}} não gostei</span>
+                            </div>  
+                        </div>
+                        -->
+                        <a class="media-heading title-post small" style="white-space: normal">{{friend.abreviatura}} <b>{{friend.nome}}</b> {{friend.sigla}}-{{friend.uf}}</a>
+
+                        <div class="sr-minimo">
+                            <i class='fa fa-info-circle'></i>
+                             <span ng-if="friend.evolucaoBens > 0">Aumentou seus bens em {{friend.evolucaoBens}}%</span>
+                             <span ng-if="friend.evolucaoBens < 0">Diminuiu seus bens em {{friend.evolucaoBens}}%</span>
+                             <span ng-if="friend.evolucaoReceitas > 0">&bull; Aumentou receitas de campanha em {{friend.evolucaoReceitas}}%</span>
+                             <span ng-if="friend.evolucaoReceitas < 0">&bull; Diminuiu receitas de campanha em {{friend.evolucaoReceitas}}%</span>
+                             <span ng-if="friend.evolucaoDespesas > 0">&bull; Aumentou despesas de campanha em {{friend.evolucaoDespesas}}%</span>
+                             <span ng-if="friend.evolucaoDespesas < 0">&bull; Diminuiu de despesas de campanha em {{friend.evolucaoDespesas}}%</span> 
+                             <span ng-if="friend.valoVoto > 0">&bull; "Pagou" R${{friend.valoVoto}} por voto na última eleição</span>
+                             <span ng-if="friend.quantidadeCitacoes > 0">&bull; Citado/investigado em {{friend.quantidadeCitacoes}} casos</span>
+                             <span ng-if="friend.percentualPresenca > 0">&bull; {{friend.percentualPresenca}}% de presença em plenário</span>
+                            
+                         </div> 
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+        <ion-infinite-scroll icon="ion-loading-c" ng-if="!vm.noMoreItemsAvailable" on-infinite="vm.loadMoreFriends()" distance="10%"></ion-infinite-scroll>
+        <div class="text-center">
+            <ion-spinner ng-show="!vm.noMoreItemsAvailable && !vm.advisorProcessado" class="spinner my-spinner"></ion-spinner>
+        </div>
+        
+    </ion-content>
+</ion-view>

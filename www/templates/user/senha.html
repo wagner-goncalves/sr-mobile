@@ -1,0 +1,44 @@
+<ion-view title="Alterar senha">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <form name="formSenha" ng-submit="false" novalidate class="login-form">
+            <div class="list list-inset" style="background-color:#FFFFFF">
+                <li class="item">
+                    <i class="fa fa-user fa-lg"></i> {{vm.loggedUser.nome}}
+                </li>
+                
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Senha atual</span>
+                    <input next-on-enter select-on-click class="my-input" required type="password" name="senhaAtual" id="senhaAtual" ng-model="vm.loggedUser.senhaAtual" />
+                    <div ng-messages="formSenha.senhaAtual.$error" class="validation-message text-warning">
+                        <div ng-message="required">Senha atual é obrigatória</div>
+                    </div>
+                </label>                   
+                
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nova senha</span>
+                    <input next-on-enter select-on-click class="my-input" minlength="6" required type="password" name="novaSenha" id="novaSenha" ng-model="vm.loggedUser.novaSenha" />
+                    <div ng-messages="formSenha.novaSenha.$error" class="validation-message text-warning">
+                        <div ng-message="required">Senha é obrigatória</div>
+                        <div ng-message="minlength">A senha deve conter pelo menos 6 caracteres</div>
+                    </div>
+                </label>         
+                
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Confirmar senha</span>
+                    <input next-on-enter select-on-click class="my-input" ng-pattern="vm.loggedUser.novaSenha" required type="password" name="confirmaSenha" id="confirmaSenha" ng-model="vm.loggedUser.confirmaSenha" />
+                    <div ng-messages="formSenha.confirmaSenha.$error" class="validation-message text-warning">
+                        <div ng-message="required">Confirmação é obrigatória</div>
+                        <div ng-message="pattern">Confirmação inválida</div>
+                    </div>                      
+                </label>     
+                
+                <div class="item item-buttom-right">
+                    <button angular-ripple ng-disabled="!formSenha.$valid" ng-click="formSenha.$valid && vm.confirmEditSenha(vm.loggedUser.senhaAtual, vm.loggedUser.novaSenha)" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Confirmar</button>                      
+                </div>                           
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,14 @@
+{
+  "name": "Sr.Cidadão",
+  "app_id": "7089af67",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
+}

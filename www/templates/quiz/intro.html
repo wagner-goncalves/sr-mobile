@@ -1,0 +1,42 @@
+<ion-view title="{{vm.quiz.titulo}}" class="login">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="wizard"> 
+        <script id="quiz-regras.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive azul-bandeira"  ng-click="modal.hide()">
+                <h1 class="title"><i class="fa fa-question-circlex"></i> Mais informações</h1>
+                <div class="buttons buttons-right header-item">
+                    <span class="right-buttons">
+                        <i class="fa fa-close fa-lg icon-search"></i>
+                    </span>
+                </div>
+            </ion-header-bar>
+            <ion-content class="modal-contents" ng-bind-html="vm.quiz.regras"></ion-content>
+          </ion-modal-view>
+        </script>
+        <div class="sr-slide text-center container">
+            <div class="sr-walk-content">
+                <h1><i class="fa fa-hand-o-up fa-2x"></i></h1>
+                <h1>{{vm.quiz.titulo}}</h1>
+                <h4>{{vm.quiz.descricao}}</h4>
+                <div class="panel panel-default" ng-if="vm.quiz.stats.totalRespostas > 0">
+                    <div class="panel-body">
+                        <div>
+                            <p class="small text-primary">Questões já respondidas</p>
+                            <div class="progress">
+                                <div 
+                                   ng-class="{'progress-bar-success' : vm.percentualRespostas == 100,
+                                   'progress-bar-danger' : vm.percentualRespostas < 100}" class="progress-bar" role="progressbar" aria-valuenow="{{vm.percentualRespostas}}" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.percentualRespostas}}%"> <span ng-if="vm.percentualRespostas > 50" class="str-only barra-progresso">{{vm.quiz.stats.totalRespostas}} de {{vm.quiz.stats.totalPerguntas}}</span> </div>
+                                <span ng-if="vm.percentualRespostas <= 50" class="str-only barra-progresso">{{vm.quiz.stats.totalRespostas}} de {{vm.quiz.stats.totalPerguntas}}</span> </div>
+                            <button angular-ripple class="btn btn-xs btn-default" ng-click="vm.finish()"> <span ng-if="vm.percentualRespostas == 100">Ver resultado</span></button>
+                        </div>
+                    </div>
+                </div>
+                <button angular-ripple class="btn btn-lg btn-default" style="margin: 20px" ng-click="vm.perguntas()"> <span ng-if="vm.percentualRespostas == 0">Começar</span> <span ng-if="vm.percentualRespostas > 0 && vm.percentualRespostas < 100">Continuar</span> <span ng-if="vm.percentualRespostas == 100">Revisar respostas</span> <i class="fa fa-arrow-right"></i></button>
+                <div class="small" ng-click="vm.quizRegras()"> <i class="fa fa-question-circle fa-lg"></i> saiba como calculamos </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

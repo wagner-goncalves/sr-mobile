@@ -1,0 +1,16 @@
+<p class="small" ng-if="hasTipo"><strong>{{event.tipo}}</strong><span ng-if="hasTema"> sobre <strong>{{event.tema}}</strong></span></p>
+<p class="small detail-post" ng-class="{'text-success' : event.oidTipoNotificacao == '1', 'text-danger' : event.oidTipoNotificacao == '2'}">
+    
+    <span ng-if="event.oidTipoNotificacao == '1'">
+        <i class="fa fa-hand-o-up fa-lg"></i>
+    </span>
+    <span ng-if="event.oidTipoNotificacao == '2'" class="fa-stack fa-lg">
+        <i class="fa fa-hand-o-up fa-stack-1x"></i>
+        <i class="fa fa-ban fa-stack-2x"></i>
+    </span>
+	
+	<span style="white-space: pre-line">{{event.texto}}</span>
+    
+    <p class="small" ng-if="hasObjeto"><strong>Objeto desta votação: </strong>{{event.objeto}}</p>
+    <span ng-if="hasJustification"><strong>Justificativa</strong>: {{event.justificativa}}</span>
+</p>

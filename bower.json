@@ -1,0 +1,29 @@
+{
+  "name": "SrCidadao",
+  "private": true,
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.1"
+  },
+  "dependencies": {
+    "angular-moment": "~0.10.3",
+    "moment": "~2.10.6",
+    "angular-messages": "1.5.8",
+    "ngstorage": "0.3.11",
+    "angular-ripple": "*"
+  },
+  "description": "Sr. Cidadão",
+  "main": "www/js/app.js",
+  "authors": [
+    "Wagner Gomes Goncalves"
+  ],
+  "license": "MIT",
+  "homepage": "www.srcidadao.com.br",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ]
+}

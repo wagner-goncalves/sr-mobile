@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="assets/css/form-elements.css">
+<link rel="stylesheet" href="assets/css/login.css">
+<ion-view title="Cadastre-se" class="login animated fadeIn">
+    <ion-nav-bar>
+      <ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-b"></i> voltar</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="gem-ion-content">
+        <div class="row">
+            <div class="col-sm-12 form-container">
+                <div><img class="img-responsive center-image logo-border" check-image ng-src="assets/img/logo-sr-branco.png" />
+                    <p class="text-center">v1.0.2 Monitorando a Câmara e Senado + Dados TCU, Eleições e Lava Jato</p>
+                </div>
+                <div class="form form-container">
+                    <form name="formCadastro" ng-submit="formCadastro.$valid && vm.termosuso && vm.cadastro()" novalidate class="registration-form">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-first-name">Nome</label>
+                                <input type="text" next-on-enter name="nome" placeholder="Nome..." class="login form-first-name form-control" id="nome" ng-model="vm.nome" required>
+                                <div ng-messages="formCadastro.$submitted && formCadastro.nome.$error" class="help-block" ng-class="{'animated fadeIn' : formCadastro.nome.$error}">
+                                    <div ng-message="required">Nome é obrigatório.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-email">E-mail</label>
+                                <input type="email" next-on-enter name="email" placeholder="E-mail..." class="login form-email form-control" id="email"  ng-model-options="{debounce: 100}" ng-model="vm.email" unique-email required>
+                                <div ng-messages="formCadastro.$submitted && formCadastro.$error" class="help-block" ng-class="{'animated fadeIn' : formCadastro.email.$error}">
+                                    <div ng-message="required">E-mail é obrigatório.</div>
+                                    <div ng-message="email">E-mail inválido.</div>
+                                </div>
+                                <div ng-if="formCadastro.email.$touched && formCadastro.email.$error.unique" class="help-block">
+                                    <div>O e-mail informado já está em uso.</div>
+                                </div>                                    
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-senha">Senha</label>
+                                <input type="password" next-on-enter name="senha" placeholder="Senha..." class="login form-email form-control" id="senha" ng-model="vm.senha" ng-minlength="6" required>
+                                <div ng-messages="formCadastro.$submitted && formCadastro.senha.$error" class="help-block" ng-class="{'animated fadeIn' : formCadastro.senha.$error}">
+                                    <div ng-message="required">Senha é obrigatória.</div>
+                                    <div ng-message="minlength">Deve conter pelo menos 6 caracteres.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-senha">Confirmar senha</label>
+                                <input type="password" name="confirmasenha" placeholder="Confirmar..." class="login form-email form-control" id="confirmasenha" ng-model="vm.confirmasenha" ng-pattern="senha" required>
+                                <div ng-messages="formCadastro.$submitted && formCadastro.senha.$error" class="help-block" ng-class="{'animated fadeIn' : formCadastro.senha.$error}">
+                                    <div ng-message="required">Confirmação de senha é obrigatória.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group text-form">
+                                <ion-checkbox value="1" name="termosuso" class="modal-checkbox" ng-model="vm.termosuso" required></ion-checkbox>
+                                Concordo com 
+                                <termos-de-uso></termos-de-uso>
+                            </div>
+                            <div ng-if="formCadastro.$submitted && !vm.termosuso" class="help-block" ng-class="{'animated fadeIn' : formCadastro.$submitted && !vm.termosuso}"> Para prosseguir, concorde com o termos de uso. </div>
+                        </div>
+                        <div ng-if="vm.error" class="alert alert-danger">{{vm.error}}</div>
+                        <button type="submit" angular-ripple class="btn btn-default btn-block btn-lg" ng-disabled="vm.loading">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

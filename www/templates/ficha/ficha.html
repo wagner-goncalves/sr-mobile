@@ -1,0 +1,152 @@
+﻿<ion-view title="{{vm.politico.nome}}">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content sr-ficha">
+       
+       
+        <div class="text-right" style="padding: 10px 10px 0 10px;">
+            <i class="fa fa-2x h-center"
+                        ng-click="vm.socialShare('facebook')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'facebook', 
+                            'fa-facebook-square' : !vm.sharingPlataforma}"></i>&nbsp;
+            <i class="fa fa-2x h-center"
+                        ng-click="vm.socialShare('whatsapp')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'whatsapp', 
+                            'fa-whatsapp' : !vm.sharingPlataforma}"></i>&nbsp;
+            <i class="fa fa-2x h-center"
+                        ng-click="vm.socialShare('twitter')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == 'twitter', 
+                            'fa-twitter-square' : !vm.sharingPlataforma}"></i>&nbsp;
+            <i class="fa fa-2x h-center"
+                        ng-click="vm.socialShare('')" ng-class="{'fa-refresh fa-spin' : vm.sharingPlataforma && vm.sharingPlataforma == '', 
+                            'fa-share-alt' : !vm.sharingPlataforma}"></i>
+        </div>        
+        <div ng-if="vm.ficha.length == 0 && vm.presenca.length == 0 && vm.votacao.length == 0">
+            <ion-spinner class="spinner my-spinner"></ion-spinner>
+        </div>
+        <div class="card" id="pdfArea" style="margin-top: 10px">
+            <div class="item item-text-wrap" ng-if="vm.politico.arquivoFotoLocal">
+                <div class="media" style="text-align:center; margin-top:15px">
+                    <div class="image-profile"> <img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + vm.politico.arquivoFotoLocal}}" /> </div>
+                    <div class="media-body">
+                        <div class="media-heading title-user">
+                            <h2>{{vm.politico.nome}}</h2>
+                            <p>{{vm.politico.titulo}} {{vm.politico.sigla}}-{{vm.politico.uf}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="vm.ficha.length > 0" class="item item-text-wrap" ng-repeat="item in vm.ficha track by item.anoEleicao">
+                <h1>Eleições {{item.anoEleicao}}</h1>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tbody>
+                        <tr ng-if="item.cargo">
+                            <th>Cargo</th>
+                            <td>{{item.cargo}}</td>
+                        </tr>
+                        <tr ng-if="item.votos">
+                            <th>Votos</th>
+                            <td class="text-right">{{item.votos | number : 0}}</td>
+                        </tr>
+                        <tr ng-if="item.totalBens">
+                            <th>Bens declarados</th>
+                            <td class="text-right"> 
+                                <span ng-class="{ 'text-success': item.dadosAnterior.totalBens <= 0, 'text-danger': item.dadosAnterior.totalBens > 0 }" class="small"> 
+                                    <span ng-if="item.dadosAnterior.totalBens != 0">{{item.dadosAnterior.totalBens | number : 0}}%</span> 
+                                    <i ng-if="item.dadosAnterior.totalBens" 
+                                    ng-class="{ 'fa-arrow-circle-down': item.dadosAnterior.totalBens <= 0, 'fa-arrow-circle-up': item.dadosAnterior.totalBens > 0 }" 
+                                    class="fa"></i>
+                                </span> R${{item.totalBens | number : 2}} </td>
+                        </tr>
+                        <tr ng-if="item.totalReceitas && item.totalReceitas > 0">
+                            <th>Receitas campanha</th>
+                            <td class="text-right"> <span ng-class="{ 'text-success': item.dadosAnterior.totalReceitas <= 0, 'text-danger': item.dadosAnterior.totalReceitas > 0 }" class="small"> <span ng-if="item.dadosAnterior.totalReceitas != 0">{{item.dadosAnterior.totalReceitas | number : 0}}%</span> <i ng-if="item.dadosAnterior.totalReceitas != 0" ng-class="{ 'fa-arrow-circle-down': item.dadosAnterior.totalReceitas <= 0, 'fa-arrow-circle-up': item.dadosAnterior.totalReceitas > 0 }" class="fa"></i> </span> R${{item.totalReceitas | number : 2}}</td>
+                        </tr>
+                        <tr ng-if="item.totalDespesas && item.totalDespesas > 0">
+                            <th>Despesas campanha</th>
+                            <td class="text-right"> <span  ng-class="{ 'text-success': item.dadosAnterior.totalDespesas <= 0, 'text-danger': item.dadosAnterior.totalDespesas > 0 }" class="small"> <span ng-if="item.dadosAnterior.totalDespesas != 0">{{item.dadosAnterior.totalDespesas | number : 0}}%</span> <i ng-if="item.dadosAnterior.totalDespesas != 0" ng-class="{ 'fa-arrow-circle-down': item.dadosAnterior.totalDespesas <= 0, 'fa-arrow-circle-up': item.dadosAnterior.totalDespesas > 0 }" class="fa"></i> </span> R${{item.totalDespesas | number : 2}}</td>
+                        </tr>
+                        <tr ng-if="item.valorVoto && item.valorVoto > 0">
+                            <th>Preço do voto</th>
+                            <td class="text-right"> <span ng-class="{ 'text-success': item.dadosAnterior.valorVoto <= 0, 'text-danger': item.dadosAnterior.valorVoto > 0 }" class="small"> <span ng-if="item.dadosAnterior.valorVoto != 0">{{item.dadosAnterior.valorVoto | number : 0}}%</span> <i ng-if="item.dadosAnterior.valorVoto != 0" ng-class="{ 'fa-arrow-circle-down': item.dadosAnterior.valorVoto <= 0, 'fa-arrow-circle-up': item.dadosAnterior.valorVoto > 0 }" class="fa"></i> </span> R${{item.valorVoto | number : 2}}</td>
+                        </tr>
+                        <tr ng-if="item.situacao">
+                            <th>Situação</th>
+                            <td>{{item.situacao}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="vm.presenca.length > 0" class="item item-text-wrap">
+                <h1>Assiduidade</h1>
+                <div ng-if="vm.politico.oidInstituicao == 1">
+                    <div>
+                        <canvas height="200px" id="pie" chart-colors="vm.graphVotacao.colors" chart-options="vm.graphVotacao.options" class="chart chart-pie" chart-data="vm.graphVotacao.data" chart-labels="vm.graphVotacao.labels"></canvas>
+                    </div>
+                    <div class="small small">A partir de Jan/2015</div>
+                </div>
+                <div ng-if="vm.politico.oidInstituicao != 1">
+                    <div class="small small">Infelizmente a casa legislativa não fornece informações de assiduidade em seus dados abertos.</div>
+                </div>                
+            </div>
+            
+            <div ng-if="vm.citacao.length > 0" class="item item-text-wrap">
+                <h1>Citações e Investigações</h1>
+                
+                <table  style="font-size: 85%" class="table table-striped table-bordered table-condensed">
+                    <tbody>
+                        <tr ng-repeat="item in vm.citacao track by item.oidCitacao">
+                            <td style="font-size: 85%">
+                            <p><strong>{{item.operacao}}</strong></p>
+                            <p>{{item.descricao}}
+                            <a ng-click="vm.logCitacao(item.oidCitacao, item.linksMaisInfo)">Fonte <i class="fa fa-external-link"></i></a><p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+            
+            <div ng-if="vm.contastcu.length > 0" class="item item-text-wrap">
+
+                <h2 style="padding-bottom: 10px"><strong><ng-pluralize count="vm.contastcu.length" when="{'one' : 'Uma conta irregular no TCU', 'other' : '{} contas irregulares no TCU'}"></ng-pluralize></strong></h2>
+                
+                <table  style="font-size: 85%" class="table table-striped table-bordered table-condensed">
+                    <tbody>
+                        <tr ng-repeat="item in vm.contastcu track by item.oidContasTcu">
+                            <td style="font-size: 85%">
+                                <a ng-click="vm.logContasTcu(item.oidContasTcu, item.linkInteiroTeor)">
+                                    Processo: <strong>{{item.inidoneoLicitar}}</strong> 
+                                    transitado em julgado em {{item.dataLancamento}} 
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>                                  
+            
+            <div ng-if="vm.votacao.length > 0" class="item item-text-wrap">
+                <h1>Como vota</h1>
+                <table  style="font-size: 85%" class="table table-striped table-bordered table-condensed">
+                    <tbody>
+                        <tr>
+                            <th>Proposição</th>
+                            <th>Resumo</th>
+                            <th>Voto</th>
+                            <th>Seu voto</th>
+                        </tr>
+                        <tr ng-class="{'success' : item.voto == item.seuvoto}" ng-repeat="item in vm.votacao track by item.oidNotificacao">
+                            <td class="small" style="font-size: 85%">{{item.proposicao}}</td>
+                            <td class="small" style="font-size: 85%">{{item.explicacao}}</td>
+                            <td class="small" style="font-size: 75%">{{item.voto}}</td>
+                            <td class="small" style="font-size: 75%">{{item.seuvoto}}
+                                <i ng-class="{'fa-check' : item.voto == item.seuvoto}" class="fa text-success fa-lg"></i>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="small" style="padding: 10px">Fontes: Casas Legislativas - TSE - TCU</div>
+        </div>
+    </ion-content>
+</ion-view>

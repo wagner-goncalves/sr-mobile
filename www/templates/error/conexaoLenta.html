@@ -1,0 +1,13 @@
+<ion-view title="Sem resposta">
+    <ion-content class="has-header gem-ion-content">
+        <div class="text-center padding">
+            <i class="fa fa-cloud fa-5x" aria-hidden="true" style="padding: 20px"></i>
+            <h1 class="title-message">Sem resposta</h1>
+            <p class="body-message padding">Desculpe, o Sr.Cidadão não recebeu resposta para sua requisição. Verifique a velocidade se sua internet e tente novamente. </p>
+               <button class="btn btn-link bt-lg" ng-click="vm.tryAgainLentidao()">
+                <i ng-class="{ 'fa-spin' : vm.tryingAgain }" class="fa fa-refresh fa-2x"></i>
+                <br> Tentar novamente</button>
+            <p><button class="btn btn-link bt-lg small" ng-click="vm.sair()"><span class="small"><i class="fa fa-window-close"></i> Sair do Sr.Cidadão</span></button></p>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,64 @@
+<div class="thumbnail thumbnail-post animated-item" ng-repeat="event in vm.itensEvent track by event.oidNotificacao"> 
+    <!--caption-->
+    <div class="caption" ng-class="{'sr-post-frequencia' : event.oidTipoNotificacao == '1' || event.oidTipoNotificacao == '2' || event.oidTipoNotificacao == '5'}">
+        <div class="media">
+            <!--<feed-menu ng-if="!vm.politico" class="feed-menu pull-right" data-friend="event" data-callback-apaga="vm.apagaAmigo"></feed-menu>-->
+            <div>
+                <div class="media-left">
+                    <div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + event.arquivoFotoLocal}}" /></div>
+                </div>
+                <div class="media-body text-left"> 
+                    <i ng-click="vm.like(event)" ng-class="{ 
+                        'fa-thumbs-up sr-icone-ok fa-2x' : event.flgCurtir == '1',  
+                        'fa-thumbs-o-up sr-icone-claro fa-2x' : event.flgCurtir != '1', 
+                        'fa-refresh fa-spin': event.loadingLike 
+                    }" class="fa pull-right"></i>        
+                   
+                   
+                   <a class="media-heading title-post small" ng-click="vm.politicianDetail(event.oidPolitico)">{{event.nome}} <small>{{event.sigla}}-{{event.uf}}</small></a> <br />
+
+                    <span ng-if="event.oidTipoNotificacao == '3'">
+                        <i class="fa fa-check fa-lg text-success"></i> Sim
+                    </span> 
+                    <span ng-if="event.oidTipoNotificacao == '4'">
+                        <i class="fa fa-close fa-lg text-danger"></i> Não
+                    </span> 
+                    <span ng-if="event.oidTipoNotificacao == '6'"> 
+                        <i class="fa fa-exclamation fa-lg"></i> Abstenção
+                    </span>
+                    <span ng-if="event.oidTipoNotificacao == '7'"> 
+                        <i class="fa fa-exclamation fa-lg text-warning"></i> Obstrução
+                    </span> 
+                    <span ng-if="event.oidTipoNotificacao == '8'"> 
+                        <i class="fa fa-exclamation fa-lg text-warning"></i> Não votou
+                    </span>  
+
+                    <span ng-if="event.oidTipoNotificacao == '3' || event.oidTipoNotificacao == '4' || event.oidTipoNotificacao == '6' || event.oidTipoNotificacao == '7' || event.oidTipoNotificacao == '8'" class="small" ng-if="event.dataHoraEvento">em {{event.dataHoraEvento | amDateFormat:'DD/MM/YYYY'}}</span>
+                    
+                                
+                    <span ng-if="event.oidTipoNotificacao == '1'">
+                        <i class="fa fa-hand-o-up fa-lg text-success"></i> PRESENTE <span class="small">em {{event.dataHoraEvento | amDateFormat:'DD/MM/YYYY'}}</span>
+                    </span>   
+                    <span ng-if="event.oidTipoNotificacao == '2'">
+                        <i class="fa fa-hand-o-up fa-lg text-danger"></i> AUSENTE <span class="small">em {{event.dataHoraEvento | amDateFormat:'DD/MM/YYYY'}}</span>
+                    </span>   
+                    <span ng-if="event.oidTipoNotificacao == '5'">
+                        <i class="fa fa-hand-o-up fa-lg text-danger"></i> Ausência justificada <span class="small">em {{event.dataHoraEvento | amDateFormat:'DD/MM/YYYY'}}</span>
+                    </span>
+                    <p style="padding-top: 5px; margin-bottom: 0">
+                        <i ng-click="vm.compartilhar(event)" ng-class="{ 'fa-refresh fa-spin': event.loadingShare, 'fa-facebook-square': !event.loadingShare, 'text-danger' : event.temPostFb == '1'}" class="fa fa-lg sr-icone-facebook"></i> 
+                        <i ng-click="vm.comment(event)" class="fa fa-envelope-square fa-lg link-post sr-icone-email"></i> <span ng-if="event.contaComentarios > 0" class="badge">{{event.contaComentarios}}</span>                                    
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <feed-text ng-if="event.oidTipoNotificacao != '1' && event.oidTipoNotificacao != '2' && event.oidTipoNotificacao != '5'" class="text-left" data-event="event" ng-click="vm.abreLembrete(event)"></feed-text>
+
+    </div>
+
+</div>
+<ion-infinite-scroll icon="ion-loading-c" ng-if="!vm.noMoreItemsAvailable" on-infinite="vm.loadMoreEvents()" distance="10%"></ion-infinite-scroll>
+<div class="text-center">
+    <ion-spinner ng-show="!vm.noMoreItemsAvailable" class="spinner my-spinner"></ion-spinner>
+</div>

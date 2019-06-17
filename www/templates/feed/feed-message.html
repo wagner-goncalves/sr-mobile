@@ -1,0 +1,39 @@
+<ion-modal-view class="full-panel">
+    <ion-content>
+        <div class="thumbnail thumbnail-post feed-message">
+            <div id="header" class="padding message">
+                <textarea ng-model="vm.event.comentario" class="feed-textarea" class="form-control" placeholder="Esta mensagem será enviada para {{vm.event.nome}} por e-mail com cópia para você. Caso haja resposta, ela aparecerá aqui."></textarea>
+            </div>
+            <div id="content">
+                <ion-list>
+                    <ion-item style="overflow: auto; text-overflow: initial; white-space: normal;" class="animated-item-fadeIn" ng-repeat="comentario in vm.event.comentarios">
+                        <p class="small" style="overflow: auto; text-overflow: initial; white-space: normal;">{{comentario.comentario}}</p>
+                        <p class="comment-options"><span am-time-ago="comentario.dataHoraComentario | amParse:'YYYY-MM-DD HH:mm:ss'"></span> • <a ng-click="vm.deleteComment(comentario)">Apagar</a></p>
+                        
+                        <ion-list>
+                            <ion-item class="animated-item-fadeIn" ng-repeat="resposta in comentario.respostas">
+                                <div class="media-left">
+                                    <div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + vm.event.arquivoFotoLocal}}" /></div>
+                                </div>                                
+                                
+                                <p class="small">{{resposta.resposta}}</p>
+                                <p class="comment-options"><span am-time-ago="resposta.dataHoraResposta | amParse:'YYYY-MM-DD HH:mm:ss'"></span></p>
+                            </ion-item>
+                        </ion-list>                        
+                        
+                    </ion-item>
+                </ion-list>
+            </div>
+            <div id="footer">
+                <div class="links-post feed-message-options">
+                    <div class="pull-right clearfix">
+                        <button class="link-post" ng-click="vm.modal.hide()" role="button"><i class="fa fa-remove"></i>FECHAR</button>
+                        <button ng-if="vm.event.comentario.length > 0" ng-class="{'animated bounceIn' : vm.event.comentario.length > 0}" class="link-post link-post-warning" ng-disabled="!vm.event.comentario.length" ng-click="vm.addComment(vm.event)" role="button">
+                            <i ng-class="{ 'fa-refresh fa-spin': vm.event.addingComment, 'fa-check': !vm.event.addingComment }" class="fa"></i>
+                            ENVIAR</button>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

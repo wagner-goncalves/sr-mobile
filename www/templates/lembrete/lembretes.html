@@ -1,0 +1,49 @@
+﻿<ion-view title="Votações importantes">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header gem-ion-content">
+        <ion-refresher pulling-text="Atualizar..." on-refresh="vm.initController()"></ion-refresher> 
+        <section class="timeline text-center" ng-if="!vm.notificacoes">
+            <div class="eventos-title">
+                <img ng-src="assets/img/ico-vc-se-lembra.png" height="70" />
+            </div>
+            <div class="eventos-title">Principais votações em plenário</div>
+        </section>
+        
+        <section ng-if="vm.LembretesLoaded && vm.itensLembrete < 1">
+            <div class="text-center padding">
+                <div class="padding">
+                    <i class="fa fa-meh-o fa-5x"></i>
+                </div>
+                <div class="padding">
+                    <p>O Sr.Cidadão ainda não postou lembretes para você.</p>
+                    <p>Em breve novidades!</p>
+                </div>
+            </div>
+        </section>  
+        
+        <div class="text-center">
+            <ion-spinner ng-show="!vm.LembretesLoaded" class="spinner my-spinner"></ion-spinner>
+        </div>                  
+        
+        <ul class="list">
+            <li style="white-space: normal;" ng-click="vm.abreLembrete(item)" animated-custom="pulse" class="item animated-item item-pequeno" ng-repeat="item in vm.itensLembrete track by item.oidLembrete">            
+
+                    <!--
+                       <div class="media-left">
+                        <div class="image-mini"><img class="thumbnail" check-image-politico ng-src="{{vm.configuracao.baseImagemPolitico + item.arquivoFotoLocal}}" /></div>
+                    </div>
+                    -->
+                    <p class="small">{{item.titulo}} <span class="small">&bull; {{item.instituicao}}</span></p>
+                        <strong>{{item.chamada}}</strong>
+                    
+
+            </li>
+        </ul>   
+                 
+        <ion-infinite-scroll icon="ion-loading-c" ng-if="!vm.noMoreLembretesAvailable" on-infinite="vm.loadMoreLembretes()" distance="10%"></ion-infinite-scroll>
+   
+
+    </ion-content>
+</ion-view>
